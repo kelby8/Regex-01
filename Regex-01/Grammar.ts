@@ -17,6 +17,7 @@ export class Grammar {
                         console.log("rex reused");
                         throw new Error("redefining a symbol");
                     }
+
                     else if (symbols.has(current[0])) {
                         console.log("symbol reused");
                         throw new Error("redefining a symbol");
