@@ -24,6 +24,7 @@ export class Grammar {
             if (trial[i] == "") {
                 NonTerminals = true
             }
+
             else {
                 if (NonTerminals == false) { //TERMINALS SECTION
                     let current: string[] = trial[i].split("->");
