@@ -46,6 +46,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="testharness.ts" />
     <TypeScriptCompile Include="Token.ts" />
+    <TypeScriptCompile Include="Tokenizer - Copy.ts" />
     <TypeScriptCompile Include="Tokenizer.ts" />
     <TypeScriptCompile Include="shuntingyard.ts">
       <SubType>Code</SubType>
