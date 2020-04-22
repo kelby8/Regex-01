@@ -41,13 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Grammar.ts" />
-    <TypeScriptCompile Include="LR.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="testharness.ts" />
     <TypeScriptCompile Include="Token.ts" />
-    <TypeScriptCompile Include="Tokenizer - Copy.ts" />
     <TypeScriptCompile Include="Tokenizer.ts" />
+    <TypeScriptCompile Include="Tokenizer- alternate.ts" />
     <TypeScriptCompile Include="shuntingyard.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

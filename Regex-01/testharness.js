@@ -1,94 +1,81 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let fs = require("fs");
-const shuntingyard_1 = require("./shuntingyard");
-let testCount = 0;
+const Grammar_1 = require("./Grammar");
 function main() {
-    let ok = testWithFile("basictests.txt");
-    if (ok)
-        console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-Basic tests OK-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-    else
-        return;
-    ok = testWithFile("bonus1tests.txt");
-    if (ok)
-        console.log("-=-=-=-=-=-=-=-=-=-=-Bonus 1 tests (1+ argument functions) OK-=-=-=-=-=-=-=-=-=-=-");
-    else
-        return;
-    ok = testWithFile("bonus2tests.txt");
-    if (ok)
-        console.log("-=-=-=-=-=-=-=-=-=-=-Bonus 2 tests (0+ argument functions) OK-=-=-=-=-=-=-=-=-=-=-");
-    else
-        return;
-    console.log(testCount + " tests OK");
-}
-function testWithFile(fname) {
-    let data = fs.readFileSync(fname, "utf8");
-    let lst = data.split(/\n/g);
-    for (let i = 0; i < lst.length; ++i) {
-        let line = lst[i].trim();
-        if (line.length === 0)
-            continue;
-        let idx = line.indexOf("\t");
-        let inp = line.substring(0, idx);
-        let expectedStr = line.substring(idx);
-        console.log("Testing " + inp + " ...");
-        ++testCount;
-        let expected = JSON.parse(expectedStr);
-        let actual = shuntingyard_1.parse(inp);
-        if (!treesAreSame(actual, expected)) {
-            console.log("BAD!");
-            console.log(inp);
-            dumpTree("actual.dot", actual);
-            dumpTree("expected.dot", expected);
-            return false;
+    let data = fs.readFileSync("tests.txt", "utf8");
+    let tests = JSON.parse(data);
+    let numPassed = 0;
+    let numFailed = 0;
+    for (let i = 0; i < tests.length; ++i) {
+        let name = tests[i]["name"];
+        let expected = tests[i]["follow"];
+        let input = tests[i]["input"];
+        let G = new Grammar_1.Grammar(input);
+        let first = G.getFollow();
+        if (!dictionariesAreSame(expected, first)) {
+            console.log("Test " + name + " failed");
+            ++numFailed;
         }
-        else {
+        else
+            ++numPassed;
+    }
+    console.log(numPassed + " tests OK" + "      " + numFailed + " tests failed");
+    return numFailed == 0;
+}
+function dictionariesAreSame(s1, s2) {
+    let M1 = toMap(s1);
+    let M2 = s2;
+    let k1 = [];
+    let k2 = [];
+    for (let k of M1.keys())
+        k1.push(k);
+    for (let k of M2.keys())
+        k2.push(k);
+    k1.sort();
+    k2.sort();
+    if (!listsEqual(k1, k2)) {
+        console.log("part 1");
+        console.log("Lists not equal:", k1, k2);
+        return false;
+    }
+    for (let k of k1) {
+        if (!listsEqual(M1.get(k), M2.get(k))) {
+            console.log("part 2", k);
+            console.log("Lists not equal:", M1.get(k), M2.get(k));
+            return false;
         }
     }
     return true;
 }
-function treesAreSame(n1, n2) {
-    if (n1 === undefined && n2 !== undefined)
+function toMap(s) {
+    let r = new Map();
+    for (let k in s) {
+        r.set(k, new Set());
+        s[k].forEach((x) => {
+            r.get(k).add(x);
+        });
+    }
+    return r;
+}
+function listsEqual(L1a, L2a) {
+    let L1 = [];
+    let L2 = [];
+    L1a.forEach((x) => {
+        L1.push(x);
+    });
+    L2a.forEach((x) => {
+        L2.push(x);
+    });
+    L1.sort();
+    L2.sort();
+    if (L1.length !== L2.length)
         return false;
-    if (n2 === undefined && n1 !== undefined)
-        return false;
-    if (n1["sym"] != n2["sym"])
-        return false;
-    if (n1["children"].length != n2["children"].length)
-        return false;
-    for (let i = 0; i < n1["children"].length; ++i) {
-        if (!treesAreSame(n1["children"][i], n2["children"][i]))
+    for (let i = 0; i < L1.length; ++i) {
+        if (L1[i] !== L2[i])
             return false;
     }
     return true;
-}
-function dumpTree(fname, root) {
-    function walk(n, callback) {
-        callback(n);
-        n.children.forEach((x) => {
-            walk(x, callback);
-        });
-    }
-    let L = [];
-    L.push("digraph d{");
-    L.push(`node [fontname="Helvetica",shape=box];`);
-    let counter = 0;
-    walk(root, (n) => {
-        n.NUMBER = "n" + (counter++);
-        let tmp = n.sym;
-        tmp = tmp.replace(/&/g, "&amp;");
-        tmp = tmp.replace(/</g, "&lt;");
-        tmp = tmp.replace(/>/g, "&gt;");
-        tmp = tmp.replace(/\n/g, "<br/>");
-        L.push(`${n.NUMBER} [label=<${tmp}>];`);
-    });
-    walk(root, (n) => {
-        n.children.forEach((x) => {
-            L.push(`${n.NUMBER} -> ${x.NUMBER};`);
-        });
-    });
-    L.push("}");
-    fs.writeFileSync(fname, L.join("\n"));
 }
 main();
 //# sourceMappingURL=testharness.js.map
