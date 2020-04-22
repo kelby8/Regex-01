@@ -10,7 +10,7 @@ function main() {
     for (let i = 0; i < tests.length; ++i) {
         let name = tests[i]["name"];
         let expected = tests[i]["follow"];
-        let input = tests[i]["input"];
+        let input = tests[i]["spec"];
         let G = new Grammar_1.Grammar(input);
         let first = G.getFollow();
         if (!dictionariesAreSame(expected, first)) {

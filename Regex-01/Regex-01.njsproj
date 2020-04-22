@@ -31,9 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
-    <Content Include="basictests.txt" />
-    <Content Include="bonus1tests.txt" />
-    <Content Include="bonus2tests.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="tests.txt" />
@@ -42,10 +39,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="Grammar.ts" />
     <TypeScriptCompile Include="testharness.ts" />
-    <TypeScriptCompile Include="Token.ts" />
     <TypeScriptCompile Include="Tokenizer.ts" />
     <TypeScriptCompile Include="Tokenizer- alternate.ts" />
-    <TypeScriptCompile Include="shuntingyard.ts">
+    <TypeScriptCompile Include="Token.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

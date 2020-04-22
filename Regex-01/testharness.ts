@@ -12,9 +12,8 @@ function main(){
     for(let i=0;i<tests.length;++i){
         
         let name: string = tests[i]["name"];
-        let expected: { [key:string] : string[]} = tests[i]["follow"];
-        let input: string = tests[i]["input"];
-
+        let expected: { [key: string]: string[] } = tests[i]["follow"];
+        let input: string = tests[i]["spec"];
         let G = new Grammar(input);
         
         let first : Map<string,Set<string>> = G.getFollow();

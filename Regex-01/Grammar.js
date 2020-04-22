@@ -10,6 +10,9 @@ function union(setA, setB) {
 class Grammar {
     constructor(grammar) {
         this.sequence = grammar;
+        if (this.sequence == null) {
+            console.log("NULL?");
+        }
         this.symbols = new Set();
         this.definitions = new Set();
         this.terminals = [];
