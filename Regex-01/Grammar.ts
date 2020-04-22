@@ -1,5 +1,6 @@
 export class Grammar {
     constructor(grammar: string) {
+
         let sequence: string = grammar;
         let symbols: Set<string> = new Set();
         let definitions: Set<RegExp> = new Set();
