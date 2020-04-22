@@ -12,7 +12,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>846885ee-7b7b-4433-bf20-be94890993cd</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testharness.ts</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -39,11 +40,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="Grammar.ts" />
     <TypeScriptCompile Include="testharness.ts" />
-    <TypeScriptCompile Include="Tokenizer.ts" />
     <TypeScriptCompile Include="Tokenizer- alternate.ts" />
     <TypeScriptCompile Include="Token.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Tokenizer.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

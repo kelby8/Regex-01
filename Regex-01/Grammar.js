@@ -10,9 +10,6 @@ function union(setA, setB) {
 class Grammar {
     constructor(grammar) {
         this.sequence = grammar;
-        if (this.sequence == null) {
-            console.log("NULL?");
-        }
         this.symbols = new Set();
         this.definitions = new Set();
         this.terminals = [];
@@ -36,12 +33,12 @@ class Grammar {
                         //console.log(current)
                         let rex = new RegExp(current[1], "gy");
                         if (this.definitions.has(rex)) {
-                            console.log("rex reused");
+                            //console.log("rex reused");
                             this.failed = true;
                             throw new Error("redefining a symbol");
                         }
                         else if (this.symbols.has(current[0])) {
-                            console.log("symbol reused");
+                            //console.log("symbol reused");
                             this.failed = true;
                             throw new Error("redefining a symbol");
                         }
@@ -235,7 +232,7 @@ class Grammar {
                                 if (x == "ADDOP") {
                                     //console.log("Z =", Z)
                                     //console.log("Z2 =", Z2)
-                                    console.log(x);
+                                    //console.log(x)
                                 }
                                 let lenfol = null; // this and the if statement are used to track a change in follow
                                 if (follow.has(x)) {
@@ -246,7 +243,7 @@ class Grammar {
                                     follow.set(x, union(follow.get(x), first.get(y)));
                                 }
                                 else {
-                                    console.log("FIRST DOES NOT HAVE!!!!", y);
+                                    //console.log("FIRST DOES NOT HAVE!!!!", y)
                                 }
                                 if (lenfol != follow.get(x).size) {
                                     old = 0;
@@ -266,7 +263,7 @@ class Grammar {
                                     follow.set(x, union(follow.get(x), follow.get(LHS)));
                                 }
                                 else {
-                                    console.log("FOLLOW DOES NOT HAVE!!!!", LHS);
+                                    //console.log("FOLLOW DOES NOT HAVE!!!!", LHS)
                                 }
                                 if (lenfol != follow.get(x).size) {
                                     old = 0;

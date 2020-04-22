@@ -1,94 +1,82 @@
+"use strict";
+//This test harness doesn't output many diagnostics when things break.
+//If you want to, you can instrument it accordingly to help you debug.
 
 declare var require:any;
+
+import {Tokenizer} from "./Tokenizer"
+import {Grammar} from "./Grammar"
 let fs = require("fs");
-import {Grammar} from "./Grammar";
+
 
 function main(){
-    let data:string = fs.readFileSync("tests.txt","utf8");
-    let tests: any = JSON.parse(data);
-    let numPassed=0;
-    let numFailed=0;
+    let teststr : string = fs.readFileSync("tests.txt","utf8");
+    let tests = JSON.parse(teststr);
+    let lastSpec : string;
+    let G: Grammar;
+    let T: Tokenizer;
+    if (G == null) {
+        console.log("G is null")
+    }
     
     for(let i=0;i<tests.length;++i){
+        console.log("Test "+i);
+        let spec = tests[i]["tokenSpec"];
+        let inp = tests[i]["input"];
+        let expected = tests[i]["expected"];
+        if( spec !== lastSpec ){
+            G = new Grammar(spec);
+            T = new Tokenizer(G);
+            console.log("Creating tokenizer for "+tests[i]["gname"]+"...");
+            lastSpec=spec;
+        } else {
+            console.log("Reusing tokenizer...");
+        }
         
-        let name: string = tests[i]["name"];
-        let expected: { [key: string]: string[] } = tests[i]["follow"];
-        let input: string = tests[i]["spec"];
-        let G = new Grammar(input);
+        console.log("Input "+tests[i]["iname"]);
+        T.setInput(inp);
         
-        let first : Map<string,Set<string>> = G.getFollow();
-        if( !dictionariesAreSame( expected, first ) ){
-            console.log("Test "+name+" failed");
-            ++numFailed;
-        } 
-        else
-            ++numPassed;
-    }
-    console.log(numPassed+" tests OK"+"      "+numFailed+" tests failed" );
-    return numFailed==0;
-}
+        let j = 0;
+        while(true){
+            
+            let expectedToken = expected[j++];
 
-function dictionariesAreSame( s1: { [key:string] : string[]}, s2: Map<string,Set<string>> ){
-    let M1: Map<string,Set<string>> = toMap(s1);
-    let M2 = s2;
-    
-    let k1: string[] = [];
-    let k2: string[] = [];
-    for(let k of M1.keys() )
-        k1.push(k);
-    for(let k of M2.keys() )
-        k2.push(k);
-    k1.sort();
-    k2.sort();
-    if (!listsEqual(k1, k2)) {
-        console.log("part 1")
-        console.log("Lists not equal:",k1,k2);
-        return false;
-    }
-    for(let k of k1){
-        if (!listsEqual(M1.get(k), M2.get(k))) {
-            console.log("part 2", k)
-            console.log("Lists not equal:",M1.get(k), M2.get(k)  );
-            return false;
+            try{
+                let tok = T.next();
+                 
+                if( expectedToken === undefined ){
+                    console.log("Did not expect to get token here");
+                    return;
+                }
+                
+                if( expectedToken.sym === "$" && tok.sym === "$" ){
+                    break;
+                }
+                
+                if( tok.sym !== expectedToken.sym || tok.lexeme !== expectedToken.lexeme || tok.line !== expectedToken.line ){
+                    console.log("Mismatch");
+                    console.log("\tGot:",tok);
+                    console.log("\tExpected:",expectedToken);
+                    console.log("\tGrammar:");
+                    console.log(""+spec);
+                    return;
+                }
+                
+            } catch(e){
+                
+                if( e ){
+                    if( expectedToken === undefined ){
+                        //failure was expected
+                        break;
+                    } else {
+                        throw(e);
+                    }
+                }
+            }
+           
         }
     }
-    return true;
+    console.log(tests.length+" tests OK");
 }
 
-function toMap( s: { [key:string] : string[]} ) {
-    let r : Map<string,Set<string>> = new Map();
-    for(let k in s ){
-        r.set(k,new Set());
-        s[k].forEach( (x:string) => {
-            r.get(k).add(x);
-        });
-    }
-    return r;
-}
-    
-function listsEqual(L1a: any, L2a: any )
-{
-    let L1: string[] = [];
-    let L2: string[] = [];
-    L1a.forEach( (x:string) => {
-        L1.push(x);
-    });
-    L2a.forEach( (x:string) => {
-        L2.push(x);
-    });
-    
-    L1.sort();
-    L2.sort();
-    if( L1.length !== L2.length )
-        return false;
-    for(let i=0;i<L1.length;++i){
-        if( L1[i] !== L2[i] )
-            return false;
-    }
-    return true;
-}
- 
-    
-
-
-main();
+main()

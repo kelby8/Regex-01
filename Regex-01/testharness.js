@@ -1,81 +1,65 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let fs = require("fs");
+const Tokenizer_1 = require("./Tokenizer");
 const Grammar_1 = require("./Grammar");
+let fs = require("fs");
 function main() {
-    let data = fs.readFileSync("tests.txt", "utf8");
-    let tests = JSON.parse(data);
-    let numPassed = 0;
-    let numFailed = 0;
+    let teststr = fs.readFileSync("tests.txt", "utf8");
+    let tests = JSON.parse(teststr);
+    let lastSpec;
+    let G;
+    let T;
     for (let i = 0; i < tests.length; ++i) {
-        let name = tests[i]["name"];
-        let expected = tests[i]["follow"];
-        let input = tests[i]["spec"];
-        let G = new Grammar_1.Grammar(input);
-        let first = G.getFollow();
-        if (!dictionariesAreSame(expected, first)) {
-            console.log("Test " + name + " failed");
-            ++numFailed;
+        console.log("Test " + i);
+        let spec = tests[i]["tokenSpec"];
+        let inp = tests[i]["input"];
+        let expected = tests[i]["expected"];
+        if (spec !== lastSpec) {
+            G = new Grammar_1.Grammar(spec);
+            T = new Tokenizer_1.Tokenizer(G);
+            console.log("Creating tokenizer for " + tests[i]["gname"] + "...");
+            lastSpec = spec;
         }
-        else
-            ++numPassed;
-    }
-    console.log(numPassed + " tests OK" + "      " + numFailed + " tests failed");
-    return numFailed == 0;
-}
-function dictionariesAreSame(s1, s2) {
-    let M1 = toMap(s1);
-    let M2 = s2;
-    let k1 = [];
-    let k2 = [];
-    for (let k of M1.keys())
-        k1.push(k);
-    for (let k of M2.keys())
-        k2.push(k);
-    k1.sort();
-    k2.sort();
-    if (!listsEqual(k1, k2)) {
-        console.log("part 1");
-        console.log("Lists not equal:", k1, k2);
-        return false;
-    }
-    for (let k of k1) {
-        if (!listsEqual(M1.get(k), M2.get(k))) {
-            console.log("part 2", k);
-            console.log("Lists not equal:", M1.get(k), M2.get(k));
-            return false;
+        else {
+            console.log("Reusing tokenizer...");
+        }
+        console.log("Input " + tests[i]["iname"]);
+        T.setInput(inp);
+        let j = 0;
+        while (true) {
+            let expectedToken = expected[j++];
+            try {
+                let tok = T.next();
+                if (expectedToken === undefined) {
+                    console.log("Did not expect to get token here");
+                    return;
+                }
+                if (expectedToken.sym === "$" && tok.sym === "$") {
+                    break;
+                }
+                if (tok.sym !== expectedToken.sym || tok.lexeme !== expectedToken.lexeme || tok.line !== expectedToken.line) {
+                    console.log("Mismatch");
+                    console.log("\tGot:", tok);
+                    console.log("\tExpected:", expectedToken);
+                    console.log("\tGrammar:");
+                    console.log("" + spec);
+                    return;
+                }
+            }
+            catch (e) {
+                if (e) {
+                    if (expectedToken === undefined) {
+                        //failure was expected
+                        break;
+                    }
+                    else {
+                        throw (e);
+                    }
+                }
+            }
         }
     }
-    return true;
-}
-function toMap(s) {
-    let r = new Map();
-    for (let k in s) {
-        r.set(k, new Set());
-        s[k].forEach((x) => {
-            r.get(k).add(x);
-        });
-    }
-    return r;
-}
-function listsEqual(L1a, L2a) {
-    let L1 = [];
-    let L2 = [];
-    L1a.forEach((x) => {
-        L1.push(x);
-    });
-    L2a.forEach((x) => {
-        L2.push(x);
-    });
-    L1.sort();
-    L2.sort();
-    if (L1.length !== L2.length)
-        return false;
-    for (let i = 0; i < L1.length; ++i) {
-        if (L1[i] !== L2[i])
-            return false;
-    }
-    return true;
+    console.log(tests.length + " tests OK");
 }
 main();
 //# sourceMappingURL=testharness.js.map
