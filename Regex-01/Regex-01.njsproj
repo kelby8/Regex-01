@@ -35,7 +35,7 @@
     <Content Include="basictests.txt" />
     <Content Include="bonus1tests.txt" />
     <Content Include="bonus2tests.txt" />
-    <Content Include="grammar.txt" />
+    <Content Include="grammarKS.txt" />
     <Content Include="input1.txt" />
     <Content Include="input2.txt" />
     <Content Include="input3.txt" />
