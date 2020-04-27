@@ -10,14 +10,11 @@ function main() {
         let ok = tests[i]["ok"];
         let grammar = tests[i]["grammar"];
         let accepted = false;
-        if (ok == false)
-            continue;
         try {
             let G = new Grammar_1.Grammar(grammar);
             accepted = true;
         }
         catch (e) {
-            throw (e);
         }
         if (ok) {
             if (!accepted) {

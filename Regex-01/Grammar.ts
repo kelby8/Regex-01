@@ -7,7 +7,7 @@ export class Grammar {
         let trial: string[] = sequence.split("\n");
         for (let i = 0; i < trial.length; ++i) {
             let current: string[] = trial[i].split("->");
-            console.log(current)
+            //console.log(current)
             if (current[0] != "") {
                 current[0] = current[0].trim();
                 current[1] = current[1].trim();

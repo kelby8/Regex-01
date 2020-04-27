@@ -14,14 +14,11 @@ function main(){
         let ok: any = tests[i]["ok"];
         let grammar: string = tests[i]["grammar"];
         
-        let accepted = false;
-        if (ok == false)
-            continue
+        let accepted=false;
         try{
             let G = new Grammar( grammar );
             accepted = true;
-        } catch (e) {
-            throw(e)
+        } catch(e){
         }
 
         if(ok){
