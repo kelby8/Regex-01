@@ -123,7 +123,7 @@ export class Grammar {
                 }
             }
         }
-        for (let x = 0; x < this.nonterminals.length; x++) {
+        /*for (let x = 0; x < this.nonterminals.length; x++) {
             let temp = this.nonterminals[x][1]
             for (let y = 0; y < temp.length; y++) {
                 for (let z = 0; z < temp[y].length; z++) {
@@ -167,7 +167,7 @@ export class Grammar {
             if (!found) {
                 throw new Error("undefined symbol being used")
             }
-        }
+        }*/
     }
 
 

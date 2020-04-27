@@ -112,51 +112,51 @@ class Grammar {
                 }
             }
         }
-        for (let x = 0; x < this.nonterminals.length; x++) {
-            let temp = this.nonterminals[x][1];
+        /*for (let x = 0; x < this.nonterminals.length; x++) {
+            let temp = this.nonterminals[x][1]
             for (let y = 0; y < temp.length; y++) {
                 for (let z = 0; z < temp[y].length; z++) {
                     if (!this.used.includes(temp[y][z])) {
-                        this.used.push(temp[y][z]);
+                        this.used.push(temp[y][z])
                     }
                 }
             }
         }
         if (this.used.length < this.nonterminals.length + this.terminals.length) {
-            let missing = [];
+            let missing = []
             for (let y = 0; y < this.terminals.length; y++) {
                 if (!this.used.includes(this.terminals[y][0])) {
-                    missing.push(this.terminals[y][0]);
+                    missing.push(this.terminals[y][0])
                 }
             }
             for (let y = 0; y < this.nonterminals.length; y++) {
                 if (!this.used.includes(this.nonterminals[y][0])) {
-                    missing.push(this.nonterminals[y][0]);
+                    missing.push(this.nonterminals[y][0])
                 }
             }
             throw new Error("not all symbols used");
         }
         for (let x = 0; x < this.used.length; x++) {
-            let found = false;
-            let temp = this.used[x];
+            let found = false
+            let temp = this.used[x]
             for (let y = 0; y < this.terminals.length; y++) {
                 if (this.terminals[y][0] == temp) {
-                    found = true;
-                    break;
+                    found = true
+                    break
                 }
             }
             if (!found) {
                 for (let y = 0; y < this.nonterminals.length; y++) {
                     if (this.nonterminals[y][0] == temp) {
-                        found = true;
-                        break;
+                        found = true
+                        break
                     }
                 }
             }
             if (!found) {
-                throw new Error("undefined symbol being used");
+                throw new Error("undefined symbol being used")
             }
-        }
+        }*/
     }
     getNullable() {
         let nullable = [];
