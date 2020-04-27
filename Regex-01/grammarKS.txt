@@ -10,6 +10,7 @@ RETURN : 'return' ;
 LBR : '{' ;
 RBR : '}' ;
 NUM : [0-9]+ | '-' [0-9]+ ;
+WHITESPACE : [ \t\r\n]+ -> skip ;
 
 program : braceblock ;
 stmts : stmt stmts |  ;

@@ -6,7 +6,7 @@ var grammarFileName = "grammarKS.txt";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\fA\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
+    "\u0003\rA\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
     "\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004\b",
     "\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0005\u0003\u0019\n\u0003\u0003\u0004\u0003\u0004",
@@ -53,7 +53,7 @@ var literalNames = [ null, "';'", "'while'", "'('", "')'", "'if'", "'else'",
                      "'return'", "'{'", "'}'" ];
 
 var symbolicNames = [ null, "SEMI", "WHILE", "LP", "RP", "IF", "ELSE", "RETURN", 
-                      "LBR", "RBR", "NUM" ];
+                      "LBR", "RBR", "NUM", "WHITESPACE" ];
 
 var ruleNames =  [ "program", "stmts", "stmt", "loop", "cond", "braceblock", 
                    "expr", "return_stmt" ];
@@ -87,6 +87,7 @@ grammarKSParser.RETURN = 7;
 grammarKSParser.LBR = 8;
 grammarKSParser.RBR = 9;
 grammarKSParser.NUM = 10;
+grammarKSParser.WHITESPACE = 11;
 
 grammarKSParser.RULE_program = 0;
 grammarKSParser.RULE_stmts = 1;

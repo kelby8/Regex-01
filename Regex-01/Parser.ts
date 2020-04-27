@@ -22,9 +22,11 @@ function emit(instr: string) {
 
 function programNodeCode(n: TreeNode) {
     //program -> braceblock
-    if (n.sym != "program")
-        console.log("n.sym isn't program n.sym=", n.sym)
+    if (n.sym != "program") {
+        console.log(n)
+        console.log("n.sym isn't program n.sym =", n.sym.trim, "instead")
         ICE();
+    }
     braceblockNodeCode(n.children[0]);
 }
 
@@ -52,6 +54,7 @@ function stmtNodeCode(n: TreeNode) {
         case "return_stmt":
             returnstmtNodeCode(c); break;
         default:
+            console.log(n)
             console.log("c.sym isn't cond loop or return_stmt c.sym=", c.sym)
             ICE();
     }
@@ -98,11 +101,9 @@ function loopNodeCode(n: TreeNode) {
     //check this
     emit("cmp rax, 0"); // if result is 0 = false?
     var endifLabel = label();
-    emit(`jne ${endifLabel}`); // checks if result was 0 if not do action
-    emit(`${endifLabel}:`);
+    emit(`je ${endifLabel}`); // checks if result was 0 if so do action
     braceblockNodeCode(n.children[4]);
-    emit("cmp rax, 0");
-    emit(`jne ${endifLabel}`);
+    emit(`${endifLabel}:`);
 }
 
 function makeAsm(root: TreeNode) {
@@ -190,7 +191,7 @@ export function parse(txt: string) {
     parser.removeErrorListeners()
     parser.addErrorListener(handler);
     //this assumes your start symbol is 'start'
-    let antlrroot = parser.start();
+    let antlrroot = parser.program();
     let root: TreeNode = walk(parser, antlrroot);
     return makeAsm(root)
     // ...
