@@ -9,6 +9,9 @@ function main() {
     let lastSpec;
     let G;
     let T;
+    if (G == null) {
+        console.log("G is null");
+    }
     for (let i = 0; i < tests.length; ++i) {
         console.log("Test " + i);
         let spec = tests[i]["tokenSpec"];
