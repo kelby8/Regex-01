@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Grammar_1 = require("./Grammar");
 const Token_1 = require("./Token");
 class Tokenizer {
     constructor(input) {
-        this.grammar = new Grammar_1.Grammar(input);
+        this.grammar = input;
     }
     setInput(inputData) {
         this.inputData = inputData;

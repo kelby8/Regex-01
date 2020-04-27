@@ -9,8 +9,8 @@ export class Tokenizer {
     peekindex: number;
     peekline: number;
 
-    constructor(input: string) {
-        this.grammar = new Grammar(input);
+    constructor(input: Grammar) {
+        this.grammar = input;
     }
     setInput(inputData: string) {
         this.inputData = inputData
