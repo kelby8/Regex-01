@@ -45,6 +45,7 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="exetools.ts" />
     <TypeScriptCompile Include="Grammar.ts" />
     <TypeScriptCompile Include="testharness.ts" />
     <TypeScriptCompile Include="Token.ts" />
