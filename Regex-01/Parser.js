@@ -66,6 +66,7 @@ function parse(txt) {
     //this assumes your start symbol is 'start'
     let antlrroot = parser.start();
     let root = walk(parser, antlrroot);
+    return root;
     // ...
 }
 exports.parse = parse;

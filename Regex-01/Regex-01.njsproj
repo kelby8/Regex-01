@@ -5,7 +5,7 @@
     <Name>Regex-01</Name>
     <RootNamespace>Regex-01</RootNamespace>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
-    <Environment>NODE_PATH =C:\Users\kschi\Documents\class\compiler\Regex\Regex-01\Regex-01</Environment>
+    <Environment>NODE_PATH=C:\Users\kschi\Documents\class\compiler\Regex\Regex-01\Regex-01</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Grammar.ts" />
+    <TypeScriptCompile Include="Parser.ts" />
     <TypeScriptCompile Include="testharness.ts" />
     <TypeScriptCompile Include="Tokenizer.ts" />
     <TypeScriptCompile Include="Tokenizer- alternate.ts" />
