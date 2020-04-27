@@ -16,7 +16,6 @@ function main() {
             if (valid) {
             }
             else {
-                console.log(spec);
                 console.log("Reported grammar " + name + " as valid, but it's not.");
                 return;
             }

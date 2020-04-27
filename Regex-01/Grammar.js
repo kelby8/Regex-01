@@ -89,6 +89,10 @@ class Grammar {
                                 for (let z = 0; z < this.nonterminals.length; z++) {
                                     if (this.nonterminals[z][0] == LHS) {
                                         let temp = [];
+                                        for (let j = 0; j < RHS.length; j++) {
+                                            let temp2 = RHS[j].split(" ");
+                                            temp = temp2;
+                                        }
                                         this.nonterminals[z][1].push(temp);
                                     }
                                 }
@@ -106,6 +110,51 @@ class Grammar {
                         }
                     }
                 }
+            }
+        }
+        for (let x = 0; x < this.nonterminals.length; x++) {
+            let temp = this.nonterminals[x][1];
+            for (let y = 0; y < temp.length; y++) {
+                for (let z = 0; z < temp[y].length; z++) {
+                    if (!this.used.includes(temp[y][z])) {
+                        this.used.push(temp[y][z]);
+                    }
+                }
+            }
+        }
+        if (this.used.length < this.nonterminals.length + this.terminals.length) {
+            let missing = [];
+            for (let y = 0; y < this.terminals.length; y++) {
+                if (!this.used.includes(this.terminals[y][0])) {
+                    missing.push(this.terminals[y][0]);
+                }
+            }
+            for (let y = 0; y < this.nonterminals.length; y++) {
+                if (!this.used.includes(this.nonterminals[y][0])) {
+                    missing.push(this.nonterminals[y][0]);
+                }
+            }
+            throw new Error("not all symbols used");
+        }
+        for (let x = 0; x < this.used.length; x++) {
+            let found = false;
+            let temp = this.used[x];
+            for (let y = 0; y < this.terminals.length; y++) {
+                if (this.terminals[y][0] == temp) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                for (let y = 0; y < this.nonterminals.length; y++) {
+                    if (this.nonterminals[y][0] == temp) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                throw new Error("undefined symbol being used");
             }
         }
     }

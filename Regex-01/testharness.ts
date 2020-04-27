@@ -24,12 +24,11 @@ function main(){
             let G = new Grammar(spec);
             if( valid ){
             } else {
-                console.log(spec)
                 console.log("Reported grammar "+name+" as valid, but it's not.");
                 return;
             }
         } catch(e){
-            if( valid ){
+            if (valid) {
                 console.log("Reported grammar "+name+" as invalid, but it's valid.");
                 console.log(e);
                 return;
