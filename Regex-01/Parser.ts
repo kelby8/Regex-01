@@ -77,5 +77,6 @@ export function parse(txt: string) {
     //this assumes your start symbol is 'start'
     let antlrroot = parser.start();
     let root: TreeNode = walk(parser, antlrroot);
+    return root
     // ...
 }
