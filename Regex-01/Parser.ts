@@ -21,6 +21,7 @@ function emit(instr: string) {
 }
 
 function programNodeCode(n: TreeNode) {
+    //console.log(n)
     //program -> braceblock
     if (n.sym != "program") {
         console.log(n)
@@ -31,11 +32,13 @@ function programNodeCode(n: TreeNode) {
 }
 
 function braceblockNodeCode(n: TreeNode) {
+    //console.log(n)
     //braceblock -> LBR stmts RBR
     stmtsNodeCode(n.children[1]);
 }
 
 function stmtsNodeCode(n: TreeNode) {
+    //console.log(n)
     //stmts -> stmt stmts | lambda
     if (n.children.length == 0)
         return;
@@ -44,6 +47,7 @@ function stmtsNodeCode(n: TreeNode) {
 }
 
 function stmtNodeCode(n: TreeNode) {
+    //console.log(n)
     //stmt -> cond | loop | return-stmt SEMI
     let c = n.children[0];
     switch (c.sym) {
@@ -61,24 +65,27 @@ function stmtNodeCode(n: TreeNode) {
 }
 
 function returnstmtNodeCode(n: TreeNode) {
+    //console.log(n)
     //return-stmt -> RETURN expr
     exprNodeCode(n.children[1]); //...move result from expr to rax...
     emit("ret");
 }
 
 function exprNodeCode(n: TreeNode) {
+    //console.log(n)
     //expr -> NUM
     let d = parseInt(n.children[0].token.lexeme, 10);
     emit(`mov rax, ${d}`);
 }
 
 function condNodeCode(n: TreeNode) {
+    //console.log(n)
     //cond -> IF LP expr RP braceblock |  IF LP expr RP braceblock ELSE braceblock
 
     if (n.children.length === 5) {
         //no 'else'
         exprNodeCode(n.children[2]);    //leaves result in rax
-        emit("cmp rax, 0");
+        emit("cmp rax, 0");             //if rax is 0 its false
         var endifLabel = label();
         emit(`je ${endifLabel}`);
         braceblockNodeCode(n.children[4]);
@@ -96,14 +103,18 @@ function condNodeCode(n: TreeNode) {
 }
 
 function loopNodeCode(n: TreeNode) {
+    //console.log(n)
     //loop : WHILE LP expr RP braceblock ;
+    var startloopLabel = label();
+    emit(`${startloopLabel}:`);
     exprNodeCode(n.children[2]);
     //check this
-    emit("cmp rax, 0"); // if result is 0 = false?
-    var endifLabel = label();
-    emit(`je ${endifLabel}`); // checks if result was 0 if so do action
+    emit("cmp rax, 0"); // if rax is 0 = false?
+    var endloopLabel = label();
+    emit(`je ${endloopLabel}`); // checks if result was 0 if so do action
     braceblockNodeCode(n.children[4]);
-    emit(`${endifLabel}:`);
+    emit(`je ${startloopLabel}`);
+    emit(`${endloopLabel}:`);
 }
 
 function makeAsm(root: TreeNode) {
