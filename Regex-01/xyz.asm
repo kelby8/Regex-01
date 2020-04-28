@@ -12,6 +12,7 @@ je lbl2
 mov rax, 1
 ret
 lbl2:
+cmp rax, 0
 je lbl0
 lbl1:
 ret

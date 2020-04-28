@@ -105,6 +105,7 @@ function loopNodeCode(n) {
     var endloopLabel = label();
     emit(`je ${endloopLabel}`); // checks if result was 0 if so do action
     braceblockNodeCode(n.children[4]);
+    emit("cmp rax, 0");
     emit(`je ${startloopLabel}`);
     emit(`${endloopLabel}:`);
 }
