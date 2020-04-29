@@ -74,6 +74,78 @@ grammarKSListener.prototype.exitExpr = function(ctx) {
 };
 
 
+// Enter a parse tree produced by grammarKSParser#orexp.
+grammarKSListener.prototype.enterOrexp = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#orexp.
+grammarKSListener.prototype.exitOrexp = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#andexp.
+grammarKSListener.prototype.enterAndexp = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#andexp.
+grammarKSListener.prototype.exitAndexp = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#notexp.
+grammarKSListener.prototype.enterNotexp = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#notexp.
+grammarKSListener.prototype.exitNotexp = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#rel.
+grammarKSListener.prototype.enterRel = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#rel.
+grammarKSListener.prototype.exitRel = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#sum.
+grammarKSListener.prototype.enterSum = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#sum.
+grammarKSListener.prototype.exitSum = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#term.
+grammarKSListener.prototype.enterTerm = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#term.
+grammarKSListener.prototype.exitTerm = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#neg.
+grammarKSListener.prototype.enterNeg = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#neg.
+grammarKSListener.prototype.exitNeg = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#factor.
+grammarKSListener.prototype.enterFactor = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#factor.
+grammarKSListener.prototype.exitFactor = function(ctx) {
+};
+
+
 // Enter a parse tree produced by grammarKSParser#return_stmt.
 grammarKSListener.prototype.enterReturn_stmt = function(ctx) {
 };
