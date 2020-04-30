@@ -1,6 +1,7 @@
 grammar grammarKS ;
 
 SEMI : ';'  ;
+COMMENT: ('/*' .*? '*/' | '//' ~[\n]*) -> skip ; 
 WHILE : 'while'  ;
 LP : '(' ;
 RP : ')' ;
@@ -19,8 +20,8 @@ PLUS : '+' ;
 MULOP : '*' | '/' | '%' ;
 MINUS : '-' ;
 TYPE : 'int'|'string'|'double' ;
-STRING_CONSTANT : '"' ( '//"' | ~["] )* '"' ;
-ID : [A-Za-z]+ ;
+STRING_CONSTANT : '"' ( '\\"' | ~["] )* '"';
+ID : [A-Za-z0-9]+ ;
 WHITESPACE : [ \t\r\n]+ -> skip ;
 
 program : var_decl_list braceblock ;

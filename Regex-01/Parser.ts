@@ -2,9 +2,6 @@ declare var require: any;
 let antlr4 = require('./antlr4')
 let Lexer = require('./grammarKSLexer.js').grammarKSLexer;
 let Parser = require('./grammarKSParser.js').grammarKSParser
-
-let asmCode: string[] = [];
-
 enum VarType {
     INTEGER,
     STRING
@@ -91,7 +88,7 @@ class SymbolTable {
     }
     set(name: string, v: VarInfo) {
         if (this.table.has(name)) {
-            console.log("redeclaring");
+            console.log("redeclaring", name);
             ICE();
         }
         this.table.set(name, v);
@@ -100,7 +97,6 @@ class SymbolTable {
         return this.table.has(name);
     }
 }
-let symtable = new SymbolTable();
 
 class ErrorHandler {
     syntaxError(rec: any, sym: any, line: number,
@@ -111,7 +107,22 @@ class ErrorHandler {
     }
 }
 
-let stringPool: Map<string, string>
+let asmCode: string[] = [];
+
+let symtable = new SymbolTable();
+
+let stringPool: Map<string, string> = new Map < string, string>()
+
+function vardecllistNodeCode(n: TreeNode) {
+    //var_decl_list : var_decl SEMI var_decl_list | ;
+    if (n.children.length == 0) {
+        return;
+    }
+    else {
+        vardeclNodeCode(n.children[0])
+        vardecllistNodeCode(n.children[2])
+    }
+}
 
 function vardeclNodeCode(n: TreeNode) {
     //var-decl -> TYPE ID
@@ -121,8 +132,7 @@ function vardeclNodeCode(n: TreeNode) {
 }
 
 function typeNodeCode(n: TreeNode) {
-    //TYPE ? 'int' | 'string' | 'double';
-    let typenode = orexpNodeCode(n.children[0]);
+    //TYPE : 'int' | 'string' | 'double';
     switch (n.token.lexeme) {
         case "int":
             return VarType.INTEGER
@@ -175,13 +185,14 @@ function stringconstantNodeCode(n: TreeNode) {
 
 function programNodeCode(n: TreeNode) {
     //console.log(n)
-    //program -> braceblock
+    //program -> var_decl_list braceblock
     if (n.sym != "program") {
         console.log(n)
         console.log("n.sym isn't program n.sym =", n.sym.trim, "instead")
         ICE();
     }
-    braceblockNodeCode(n.children[0]);
+    vardecllistNodeCode(n.children[0]);
+    braceblockNodeCode(n.children[1]);
 }
 
 function braceblockNodeCode(n: TreeNode) {
@@ -201,7 +212,7 @@ function stmtsNodeCode(n: TreeNode) {
 
 function stmtNodeCode(n: TreeNode) {
     //console.log(n)
-    //stmt -> cond | loop | return-stmt SEMI
+    //stmt -> cond | loop | return-stmt SEMI |  assign SEMI
     let c = n.children[0];
     switch (c.sym) {
         case "cond":
@@ -210,6 +221,8 @@ function stmtNodeCode(n: TreeNode) {
             loopNodeCode(c); break;
         case "return_stmt":
             returnstmtNodeCode(c); break;
+        case "assign":
+            assignNodeCode(c); break;
         default:
             console.log(n)
             console.log("c.sym isn't cond loop or return_stmt c.sym=", c.sym)
@@ -292,12 +305,13 @@ function notexpNodeCode(n: TreeNode): VarType {
 
 function sumNodeCode(n: TreeNode): VarType {
     //sum -> sum PLUS term | sum MINUS term | term
-    if (n.children.length === 1)
+    if (n.children.length === 1) {
         return termNodeCode(n.children[0]);
+    }
     else {
         let sumType = sumNodeCode(n.children[0]);
         let termType = termNodeCode(n.children[2]);
-        if (sumType !== VarType.INTEGER || termType != VarType.INTEGER) {
+        if (sumType != VarType.INTEGER || termType != VarType.INTEGER) {
             console.log("variable type is not int in sum")
             ICE()
         }
@@ -311,7 +325,8 @@ function sumNodeCode(n: TreeNode): VarType {
                 emit("sub rax, rbx");
                 break;
             default:
-                ICE
+                console.log("neither plus nor minus")
+                ICE()
         }
         emit("push rax");
         return VarType.INTEGER;
@@ -357,7 +372,7 @@ function negNodeCode(n: TreeNode): VarType {
         return factorNodeCode(n.children[0])
     }
     else {
-        let negType = negNodeCode(n.children[1])
+        negNodeCode(n.children[1])
         emit("pop rax");
         emit("neg rax");
         emit("push rax");
@@ -385,18 +400,22 @@ function factorNodeCode(n: TreeNode): VarType {
             switch (IDinfo.type) {
                 case VarType.STRING: {
                     emit(`push qword ${IDinfo.location}`)
+                    return VarType.STRING;
                 }
-                case VarType.INTEGER:{
+
+                case VarType.INTEGER: {
                     emit(`push qword [${IDinfo.location}]`)
-                }
+                    return VarType.INTEGER;
+                } 
             }
         }
-        case "STRING-CONSTANT": {
+        case "STRING_CONSTANT": {
             let address = stringconstantNodeCode(n.children[0])
             emit(`push qword ${address}`)
+            return VarType.STRING;
         }
         default: {
-            console.log("improper entry")
+            console.log("improper entry", n.children[0].sym)
             ICE();
         }
     }
@@ -483,7 +502,7 @@ function outputSymbolTableInfo() {
 }
 
 function outputStringPoolInfo() {
-    for (let key in stringPool.keys()) {
+    for (let key of stringPool.keys()) {
         let lbl = stringPool.get(key);
         emit(`${lbl}:`);
         for (let i = 0; i < key.length; ++i) {
@@ -494,6 +513,8 @@ function outputStringPoolInfo() {
 }
 
 function makeAsm(root: TreeNode) {
+    symtable = new SymbolTable();
+    stringPool = new Map<string, string>();
     asmCode = [];
     labelCounter = 0;
     emit("default rel");

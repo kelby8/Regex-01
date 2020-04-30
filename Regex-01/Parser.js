@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let antlr4 = require('./antlr4');
 let Lexer = require('./grammarKSLexer.js').grammarKSLexer;
 let Parser = require('./grammarKSParser.js').grammarKSParser;
-let asmCode = [];
 var VarType;
 (function (VarType) {
     VarType[VarType["INTEGER"] = 0] = "INTEGER";
@@ -74,7 +73,7 @@ class SymbolTable {
     }
     set(name, v) {
         if (this.table.has(name)) {
-            console.log("redeclaring");
+            console.log("redeclaring", name);
             ICE();
         }
         this.table.set(name, v);
@@ -83,14 +82,25 @@ class SymbolTable {
         return this.table.has(name);
     }
 }
-let symtable = new SymbolTable();
 class ErrorHandler {
     syntaxError(rec, sym, line, column, msg, e) {
         console.log("Syntax error:", msg, "on line", line, "at column", column);
         throw new Error("Syntax error in ANTLR parse");
     }
 }
-let stringPool;
+let asmCode = [];
+let symtable = new SymbolTable();
+let stringPool = new Map();
+function vardecllistNodeCode(n) {
+    //var_decl_list : var_decl SEMI var_decl_list | ;
+    if (n.children.length == 0) {
+        return;
+    }
+    else {
+        vardeclNodeCode(n.children[0]);
+        vardecllistNodeCode(n.children[2]);
+    }
+}
 function vardeclNodeCode(n) {
     //var-decl -> TYPE ID
     let vname = n.children[1].token.lexeme;
@@ -98,8 +108,7 @@ function vardeclNodeCode(n) {
     symtable.set(vname, new VarInfo(vtype, label()));
 }
 function typeNodeCode(n) {
-    //TYPE ? 'int' | 'string' | 'double';
-    let typenode = orexpNodeCode(n.children[0]);
+    //TYPE : 'int' | 'string' | 'double';
     switch (n.token.lexeme) {
         case "int":
             return VarType.INTEGER;
@@ -148,13 +157,14 @@ function stringconstantNodeCode(n) {
 }
 function programNodeCode(n) {
     //console.log(n)
-    //program -> braceblock
+    //program -> var_decl_list braceblock
     if (n.sym != "program") {
         console.log(n);
         console.log("n.sym isn't program n.sym =", n.sym.trim, "instead");
         ICE();
     }
-    braceblockNodeCode(n.children[0]);
+    vardecllistNodeCode(n.children[0]);
+    braceblockNodeCode(n.children[1]);
 }
 function braceblockNodeCode(n) {
     //console.log(n)
@@ -171,7 +181,7 @@ function stmtsNodeCode(n) {
 }
 function stmtNodeCode(n) {
     //console.log(n)
-    //stmt -> cond | loop | return-stmt SEMI
+    //stmt -> cond | loop | return-stmt SEMI |  assign SEMI
     let c = n.children[0];
     switch (c.sym) {
         case "cond":
@@ -182,6 +192,9 @@ function stmtNodeCode(n) {
             break;
         case "return_stmt":
             returnstmtNodeCode(c);
+            break;
+        case "assign":
+            assignNodeCode(c);
             break;
         default:
             console.log(n);
@@ -259,12 +272,13 @@ function notexpNodeCode(n) {
 }
 function sumNodeCode(n) {
     //sum -> sum PLUS term | sum MINUS term | term
-    if (n.children.length === 1)
+    if (n.children.length === 1) {
         return termNodeCode(n.children[0]);
+    }
     else {
         let sumType = sumNodeCode(n.children[0]);
         let termType = termNodeCode(n.children[2]);
-        if (sumType !== VarType.INTEGER || termType != VarType.INTEGER) {
+        if (sumType != VarType.INTEGER || termType != VarType.INTEGER) {
             console.log("variable type is not int in sum");
             ICE();
         }
@@ -278,7 +292,8 @@ function sumNodeCode(n) {
                 emit("sub rax, rbx");
                 break;
             default:
-                ICE;
+                console.log("neither plus nor minus");
+                ICE();
         }
         emit("push rax");
         return VarType.INTEGER;
@@ -325,7 +340,7 @@ function negNodeCode(n) {
         return factorNodeCode(n.children[0]);
     }
     else {
-        let negType = negNodeCode(n.children[1]);
+        negNodeCode(n.children[1]);
         emit("pop rax");
         emit("neg rax");
         emit("push rax");
@@ -352,18 +367,21 @@ function factorNodeCode(n) {
             switch (IDinfo.type) {
                 case VarType.STRING: {
                     emit(`push qword ${IDinfo.location}`);
+                    return VarType.STRING;
                 }
                 case VarType.INTEGER: {
                     emit(`push qword [${IDinfo.location}]`);
+                    return VarType.INTEGER;
                 }
             }
         }
-        case "STRING-CONSTANT": {
+        case "STRING_CONSTANT": {
             let address = stringconstantNodeCode(n.children[0]);
             emit(`push qword ${address}`);
+            return VarType.STRING;
         }
         default: {
-            console.log("improper entry");
+            console.log("improper entry", n.children[0].sym);
             ICE();
         }
     }
@@ -457,7 +475,7 @@ function outputSymbolTableInfo() {
     }
 }
 function outputStringPoolInfo() {
-    for (let key in stringPool.keys()) {
+    for (let key of stringPool.keys()) {
         let lbl = stringPool.get(key);
         emit(`${lbl}:`);
         for (let i = 0; i < key.length; ++i) {
@@ -467,6 +485,8 @@ function outputStringPoolInfo() {
     }
 }
 function makeAsm(root) {
+    symtable = new SymbolTable();
+    stringPool = new Map();
     asmCode = [];
     labelCounter = 0;
     emit("default rel");
