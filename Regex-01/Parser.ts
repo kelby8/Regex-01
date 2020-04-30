@@ -6,14 +6,17 @@ let Parser = require('./grammarKSParser.js').grammarKSParser
 let asmCode: string[] = [];
 
 enum VarType {
-    INTEGER
+    INTEGER,
+    STRING
 }
 
-let labelCounter = 0;
-function label() {
-    let s = "lbl" + labelCounter;
-    labelCounter++;
-    return s;
+function ICE() {
+    throw new Error("ICE: Internal Compilier Error");
+}
+
+function moveBytesFromStackToLocation(loc: string) {
+    emit("pop rax");
+    emit(`mov [${loc}], rax`);
 }
 
 function convertStackTopToZeroOrOneInteger(type: VarType) {
@@ -28,12 +31,146 @@ function convertStackTopToZeroOrOneInteger(type: VarType) {
     }
 }
 
-function ICE() {
-    throw new Error("ICE: Internal Compilier Error");
+let labelCounter = 0;
+function label() {
+    let s = "lbl" + labelCounter;
+    labelCounter++;
+    return s;
+}
+
+class Token {
+    sym: string;
+    line: number;
+    lexeme: string;
+    constructor(sym: string, line: number, lexeme: string) {
+        this.sym = sym;
+        this.line = line;
+        this.lexeme = lexeme;
+    }
+    toString() {
+        return `${this.sym} ${this.line} ${this.lexeme}`
+    }
+}
+
+class TreeNode {
+    sym: string;
+    token: Token;
+    children: TreeNode[];
+    constructor(sym: string, token: Token) {
+        this.sym = sym;
+        this.token = token;
+        this.children = [];
+    }
+    toString() {
+        return `${this.sym} ${this.token} ${this.children}`
+    }
+}
+
+
+class VarInfo {
+    type: VarType;
+    location: string;  //asm label
+    //also the line number, if you want
+    constructor(t: VarType, location: string) {
+        this.location = location;
+        this.type = t;
+    }
+}
+
+class SymbolTable {
+    table: Map<string, VarInfo>;
+    constructor() {
+        this.table = new Map();
+    }
+    get(name: string) {
+        if (!this.table.has(name)) {
+            console.log("non-existant");
+            ICE();
+        }
+        return this.table.get(name);
+    }
+    set(name: string, v: VarInfo) {
+        if (this.table.has(name)) {
+            console.log("redeclaring");
+            ICE();
+        }
+        this.table.set(name, v);
+    }
+    has(name: string) {
+        return this.table.has(name);
+    }
+}
+let symtable = new SymbolTable();
+
+class ErrorHandler {
+    syntaxError(rec: any, sym: any, line: number,
+        column: number, msg: string, e: any) {
+        console.log("Syntax error:", msg, "on line", line,
+            "at column", column);
+        throw new Error("Syntax error in ANTLR parse");
+    }
+}
+
+let stringPool: Map<string, string>
+
+function vardeclNodeCode(n: TreeNode) {
+    //var-decl -> TYPE ID
+    let vname = n.children[1].token.lexeme;
+    let vtype = typeNodeCode(n.children[0]);
+    symtable.set(vname, new VarInfo(vtype, label()));
+}
+
+function typeNodeCode(n: TreeNode) {
+    //TYPE ? 'int' | 'string' | 'double';
+    let typenode = orexpNodeCode(n.children[0]);
+    switch (n.token.lexeme) {
+        case "int":
+            return VarType.INTEGER
+        case "string":
+            return VarType.STRING
+        case "double":
+            return VarType.INTEGER
+    }
 }
 
 function emit(instr: string) {
     asmCode.push(instr);
+}
+
+function assignNodeCode(n: TreeNode) {
+    // assign -> ID EQ expr
+    let t: VarType = exprNodeCode(n.children[2]);
+    let vname = n.children[0].token.lexeme;
+    if (symtable.get(vname).type !== t) {
+        console.log("Type mismatch");
+        ICE();
+    }
+    moveBytesFromStackToLocation(symtable.get(vname).location);
+}
+
+function stringconstantNodeCode(n: TreeNode) {
+    let s = n.token.lexeme;
+    //...strip leading and trailing quotation marks...
+    s = s.substring(1, s.length-1)
+    //...handle backslash escapes... ", n, and \
+    let temp = s.split("\"")
+    s = temp[0]
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\"" + temp[x]
+    }
+    temp = s.split("\n")
+    s = temp[0]
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\n" + temp[x]
+    }
+    temp = s.split("\\")
+    s = temp[0]
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\\" + temp[x]
+    }
+    if (!stringPool.has(s))
+        stringPool.set(s, label());
+    return stringPool.get(s);   //return the label
 }
 
 function programNodeCode(n: TreeNode) {
@@ -88,12 +225,6 @@ function returnstmtNodeCode(n: TreeNode) {
     emit("ret");
 }
 
-/*function exprNodeCode(n: TreeNode) {
-    //console.log(n)
-    //expr -> NUM
-    let d = parseInt(n.children[0].token.lexeme, 10);
-    emit(`push qword ${d}`);
-}*/
 function exprNodeCode(n: TreeNode): VarType {
     return orexpNodeCode(n.children[0]);
 }
@@ -235,17 +366,27 @@ function negNodeCode(n: TreeNode): VarType {
 }
 
 function factorNodeCode(n: TreeNode): VarType {
-    //factor -> NUM | LP expr RP
-    let child = n.children[0];
-    switch (child.sym) {
-        case "NUM":
-            let v = parseInt(child.token.lexeme, 10);
+    //factor : NUM | LP expr RP | STRING_CONSTANT | ID;
+    switch (n.children[0].sym) {
+        case "NUM": {
+            let v = parseInt(n.children[0].token.lexeme, 10);
             emit(`push qword ${v}`)
             return VarType.INTEGER;
-        case "LP":
+        }
+        case "LP": {
             return exprNodeCode(n.children[1]);
-        default:
+        }
+        case "ID": {
+            //?
+        }
+        case "STRING-CONSTANT": {
+            let address = stringconstantNodeCode(n.children[0])
+            emit(`push qword ${address}`)
+        }
+        default: {
+            console.log("improper entry")
             ICE();
+        }
     }
 }
 
@@ -334,33 +475,6 @@ function makeAsm(root: TreeNode) {
     return asmCode.join("\n");
 }
 
-class Token {
-    sym: string;
-    line: number;
-    lexeme: string;
-    constructor(sym: string, line: number, lexeme: string) {
-        this.sym = sym;
-        this.line = line;
-        this.lexeme = lexeme;
-    }
-    toString() {
-        return `${this.sym} ${this.line} ${this.lexeme}`
-    }
-}
-
-class TreeNode {
-    sym: string;
-    token: Token;
-    children: TreeNode[];
-    constructor(sym: string, token: Token) {
-        this.sym = sym;
-        this.token = token;
-        this.children = [];
-    }
-    toString() {
-        return `${this.sym} ${this.token} ${this.children}`
-    }
-}
 
 function walk(parser: any, node: any) {
     let p: any = node.getPayload();
@@ -382,15 +496,6 @@ function walk(parser: any, node: any) {
             N.children.push(walk(parser, child));
         }
         return N;
-    }
-}
-
-class ErrorHandler {
-    syntaxError(rec: any, sym: any, line: number,
-        column: number, msg: string, e: any) {
-        console.log("Syntax error:", msg, "on line", line,
-            "at column", column);
-        throw new Error("Syntax error in ANTLR parse");
     }
 }
 
