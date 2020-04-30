@@ -7,12 +7,14 @@ let asmCode = [];
 var VarType;
 (function (VarType) {
     VarType[VarType["INTEGER"] = 0] = "INTEGER";
+    VarType[VarType["STRING"] = 1] = "STRING";
 })(VarType || (VarType = {}));
-let labelCounter = 0;
-function label() {
-    let s = "lbl" + labelCounter;
-    labelCounter++;
-    return s;
+function ICE() {
+    throw new Error("ICE: Internal Compilier Error");
+}
+function moveBytesFromStackToLocation(loc) {
+    emit("pop rax");
+    emit(`mov [${loc}], rax`);
 }
 function convertStackTopToZeroOrOneInteger(type) {
     if (type == VarType.INTEGER) {
@@ -26,11 +28,123 @@ function convertStackTopToZeroOrOneInteger(type) {
         ICE();
     }
 }
-function ICE() {
-    throw new Error("ICE: Internal Compilier Error");
+let labelCounter = 0;
+function label() {
+    let s = "lbl" + labelCounter;
+    labelCounter++;
+    return s;
+}
+class Token {
+    constructor(sym, line, lexeme) {
+        this.sym = sym;
+        this.line = line;
+        this.lexeme = lexeme;
+    }
+    toString() {
+        return `${this.sym} ${this.line} ${this.lexeme}`;
+    }
+}
+class TreeNode {
+    constructor(sym, token) {
+        this.sym = sym;
+        this.token = token;
+        this.children = [];
+    }
+    toString() {
+        return `${this.sym} ${this.token} ${this.children}`;
+    }
+}
+class VarInfo {
+    //also the line number, if you want
+    constructor(t, location) {
+        this.location = location;
+        this.type = t;
+    }
+}
+class SymbolTable {
+    constructor() {
+        this.table = new Map();
+    }
+    get(name) {
+        if (!this.table.has(name)) {
+            console.log("non-existant");
+            ICE();
+        }
+        return this.table.get(name);
+    }
+    set(name, v) {
+        if (this.table.has(name)) {
+            console.log("redeclaring");
+            ICE();
+        }
+        this.table.set(name, v);
+    }
+    has(name) {
+        return this.table.has(name);
+    }
+}
+let symtable = new SymbolTable();
+class ErrorHandler {
+    syntaxError(rec, sym, line, column, msg, e) {
+        console.log("Syntax error:", msg, "on line", line, "at column", column);
+        throw new Error("Syntax error in ANTLR parse");
+    }
+}
+let stringPool;
+function vardeclNodeCode(n) {
+    //var-decl -> TYPE ID
+    let vname = n.children[1].token.lexeme;
+    let vtype = typeNodeCode(n.children[0]);
+    symtable.set(vname, new VarInfo(vtype, label()));
+}
+function typeNodeCode(n) {
+    //TYPE ? 'int' | 'string' | 'double';
+    let typenode = orexpNodeCode(n.children[0]);
+    switch (n.token.lexeme) {
+        case "int":
+            return VarType.INTEGER;
+        case "string":
+            return VarType.STRING;
+        case "double":
+            return VarType.INTEGER;
+    }
 }
 function emit(instr) {
     asmCode.push(instr);
+}
+function assignNodeCode(n) {
+    // assign -> ID EQ expr
+    let t = exprNodeCode(n.children[2]);
+    let vname = n.children[0].token.lexeme;
+    if (symtable.get(vname).type !== t) {
+        console.log("Type mismatch");
+        ICE();
+    }
+    moveBytesFromStackToLocation(symtable.get(vname).location);
+}
+function stringconstantNodeCode(n) {
+    let s = n.token.lexeme;
+    //...strip leading and trailing quotation marks...
+    s = s.substring(1, s.length - 1);
+    //...handle backslash escapes... ", n, and \
+    let temp = s.split("\"");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\"" + temp[x];
+    }
+    temp = s.split("\n");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\n" + temp[x];
+    }
+    temp = s.split("\\");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\\" + temp[x];
+    }
+    if (!stringPool.has(s))
+        stringPool.set(s, label());
+    return stringPool.get(s); //return the label
 }
 function programNodeCode(n) {
     //console.log(n)
@@ -82,12 +196,6 @@ function returnstmtNodeCode(n) {
     emit("pop rax");
     emit("ret");
 }
-/*function exprNodeCode(n: TreeNode) {
-    //console.log(n)
-    //expr -> NUM
-    let d = parseInt(n.children[0].token.lexeme, 10);
-    emit(`push qword ${d}`);
-}*/
 function exprNodeCode(n) {
     return orexpNodeCode(n.children[0]);
 }
@@ -225,17 +333,39 @@ function negNodeCode(n) {
     }
 }
 function factorNodeCode(n) {
-    //factor -> NUM | LP expr RP
-    let child = n.children[0];
-    switch (child.sym) {
-        case "NUM":
-            let v = parseInt(child.token.lexeme, 10);
+    //factor : NUM | LP expr RP | STRING_CONSTANT | ID;
+    switch (n.children[0].sym) {
+        case "NUM": {
+            let v = parseInt(n.children[0].token.lexeme, 10);
             emit(`push qword ${v}`);
             return VarType.INTEGER;
-        case "LP":
+        }
+        case "LP": {
             return exprNodeCode(n.children[1]);
-        default:
+        }
+        case "ID": {
+            if (!symtable.has(n.children[0].token.lexeme)) {
+                console.log("no such variable");
+                ICE();
+            }
+            let IDinfo = symtable.get(n.children[0].token.lexeme);
+            switch (IDinfo.type) {
+                case VarType.STRING: {
+                    emit(`push qword ${IDinfo.location}`);
+                }
+                case VarType.INTEGER: {
+                    emit(`push qword [${IDinfo.location}]`);
+                }
+            }
+        }
+        case "STRING-CONSTANT": {
+            let address = stringconstantNodeCode(n.children[0]);
+            emit(`push qword ${address}`);
+        }
+        default: {
+            console.log("improper entry");
             ICE();
+        }
     }
 }
 function relexpNodeCode(n) {
@@ -315,10 +445,26 @@ function loopNodeCode(n) {
     var endloopLabel = label();
     emit(`je ${endloopLabel}`); // checks if result was 0 if so do action
     braceblockNodeCode(n.children[4]);
-    //emit("pop rax");
     emit("cmp rax, 0");
     emit(`je ${startloopLabel}`);
     emit(`${endloopLabel}:`);
+}
+function outputSymbolTableInfo() {
+    for (let vname of symtable.table.keys()) {
+        let vinfo = symtable.get(vname);
+        emit(`${vinfo.location}:`);
+        emit("dq 0");
+    }
+}
+function outputStringPoolInfo() {
+    for (let key in stringPool.keys()) {
+        let lbl = stringPool.get(key);
+        emit(`${lbl}:`);
+        for (let i = 0; i < key.length; ++i) {
+            emit(`db ${key.charCodeAt(i)}`);
+        }
+        emit("db 0"); //null terminator
+    }
 }
 function makeAsm(root) {
     asmCode = [];
@@ -330,27 +476,9 @@ function makeAsm(root) {
     programNodeCode(root);
     emit("ret");
     emit("section .data");
+    outputSymbolTableInfo();
+    outputStringPoolInfo();
     return asmCode.join("\n");
-}
-class Token {
-    constructor(sym, line, lexeme) {
-        this.sym = sym;
-        this.line = line;
-        this.lexeme = lexeme;
-    }
-    toString() {
-        return `${this.sym} ${this.line} ${this.lexeme}`;
-    }
-}
-class TreeNode {
-    constructor(sym, token) {
-        this.sym = sym;
-        this.token = token;
-        this.children = [];
-    }
-    toString() {
-        return `${this.sym} ${this.token} ${this.children}`;
-    }
 }
 function walk(parser, node) {
     let p = node.getPayload();
@@ -373,12 +501,6 @@ function walk(parser, node) {
             N.children.push(walk(parser, child));
         }
         return N;
-    }
-}
-class ErrorHandler {
-    syntaxError(rec, sym, line, column, msg, e) {
-        console.log("Syntax error:", msg, "on line", line, "at column", column);
-        throw new Error("Syntax error in ANTLR parse");
     }
 }
 function parse(txt) {

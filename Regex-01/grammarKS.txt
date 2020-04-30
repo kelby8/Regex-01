@@ -14,11 +14,12 @@ OR : 'or' ;
 AND : 'and' ;
 NOT : 'not' ;
 RELOP : '>=' | '<=' | '>' | '<' | '!=' | '==' ;
+EQ : '=' ;
 PLUS : '+' ;
 MULOP : '*' | '/' | '%' ;
 MINUS : '-' ;
 TYPE : 'int'|'string'|'double' ;
-STRING_CONSTANT : '"' ( '\\"' | ~["] )* '"' ;
+STRING_CONSTANT : '"' ( '//"' | ~["] )* '"' ;
 ID : [A-Za-z]+ ;
 WHITESPACE : [ \t\r\n]+ -> skip ;
 

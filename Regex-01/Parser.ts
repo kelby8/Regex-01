@@ -377,7 +377,19 @@ function factorNodeCode(n: TreeNode): VarType {
             return exprNodeCode(n.children[1]);
         }
         case "ID": {
-            //?
+            if (!symtable.has(n.children[0].token.lexeme)) {
+                console.log("no such variable")
+                ICE();
+            }
+            let IDinfo = symtable.get(n.children[0].token.lexeme)
+            switch (IDinfo.type) {
+                case VarType.STRING: {
+                    emit(`push qword ${IDinfo.location}`)
+                }
+                case VarType.INTEGER:{
+                    emit(`push qword [${IDinfo.location}]`)
+                }
+            }
         }
         case "STRING-CONSTANT": {
             let address = stringconstantNodeCode(n.children[0])
@@ -462,6 +474,25 @@ function loopNodeCode(n: TreeNode) {
     emit(`${endloopLabel}:`);
 }
 
+function outputSymbolTableInfo() {
+    for (let vname of symtable.table.keys()) {
+        let vinfo = symtable.get(vname);
+        emit(`${vinfo.location}:`);
+        emit("dq 0");
+    }
+}
+
+function outputStringPoolInfo() {
+    for (let key in stringPool.keys()) {
+        let lbl = stringPool.get(key);
+        emit(`${lbl}:`);
+        for (let i = 0; i < key.length; ++i) {
+            emit(`db ${key.charCodeAt(i)}`);
+        }
+        emit("db 0");   //null terminator
+    }
+}
+
 function makeAsm(root: TreeNode) {
     asmCode = [];
     labelCounter = 0;
@@ -472,6 +503,8 @@ function makeAsm(root: TreeNode) {
     programNodeCode(root);
     emit("ret");
     emit("section .data");
+    outputSymbolTableInfo();
+    outputStringPoolInfo();
     return asmCode.join("\n");
 }
 

@@ -20,6 +20,24 @@ grammarKSListener.prototype.exitProgram = function(ctx) {
 };
 
 
+// Enter a parse tree produced by grammarKSParser#var_decl_list.
+grammarKSListener.prototype.enterVar_decl_list = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#var_decl_list.
+grammarKSListener.prototype.exitVar_decl_list = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#var_decl.
+grammarKSListener.prototype.enterVar_decl = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#var_decl.
+grammarKSListener.prototype.exitVar_decl = function(ctx) {
+};
+
+
 // Enter a parse tree produced by grammarKSParser#stmts.
 grammarKSListener.prototype.enterStmts = function(ctx) {
 };
@@ -35,6 +53,15 @@ grammarKSListener.prototype.enterStmt = function(ctx) {
 
 // Exit a parse tree produced by grammarKSParser#stmt.
 grammarKSListener.prototype.exitStmt = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#assign.
+grammarKSListener.prototype.enterAssign = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#assign.
+grammarKSListener.prototype.exitAssign = function(ctx) {
 };
 
 
