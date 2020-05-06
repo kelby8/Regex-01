@@ -6,108 +6,139 @@ var grammarFileName = "grammarKS.txt";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u0019\u00b2\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
-    "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
-    "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
-    "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
-    "\u0004\u0011\t\u0011\u0004\u0012\t\u0012\u0004\u0013\t\u0013\u0004\u0014",
-    "\t\u0014\u0003\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u00031\n\u0003\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0005\u0005:\n\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006",
-    "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006D\n\u0006",
+    "\u0003 \u00dc\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
+    "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0004",
+    "\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010\u0004",
+    "\u0011\t\u0011\u0004\u0012\t\u0012\u0004\u0013\t\u0013\u0004\u0014\t",
+    "\u0014\u0004\u0015\t\u0015\u0004\u0016\t\u0016\u0003\u0002\u0003\u0002",
+    "\u0003\u0002\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0005\u00035\n\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0005",
+    "\u0003\u0005\u0003\u0005\u0003\u0005\u0005\u0005>\n\u0005\u0003\u0006",
+    "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006",
+    "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006K\n\u0006",
     "\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003",
     "\b\u0003\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003",
     "\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0005",
-    "\t^\n\t\u0003\n\u0003\n\u0003\n\u0003\n\u0003\u000b\u0003\u000b\u0003",
-    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0007\fl\n\f\f\f\u000e\f",
-    "o\u000b\f\u0003\r\u0003\r\u0003\r\u0003\r\u0003\r\u0003\r\u0007\rw\n",
-    "\r\f\r\u000e\rz\u000b\r\u0003\u000e\u0003\u000e\u0003\u000e\u0005\u000e",
-    "\u007f\n\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003",
-    "\u000f\u0005\u000f\u0086\n\u000f\u0003\u0010\u0003\u0010\u0003\u0010",
-    "\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010",
-    "\u0007\u0010\u0091\n\u0010\f\u0010\u000e\u0010\u0094\u000b\u0010\u0003",
-    "\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0007",
-    "\u0011\u009c\n\u0011\f\u0011\u000e\u0011\u009f\u000b\u0011\u0003\u0012",
-    "\u0003\u0012\u0003\u0012\u0005\u0012\u00a4\n\u0012\u0003\u0013\u0003",
-    "\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0005",
-    "\u0013\u00ad\n\u0013\u0003\u0014\u0003\u0014\u0003\u0014\u0003\u0014",
-    "\u0002\u0006\u0016\u0018\u001e \u0015\u0002\u0004\u0006\b\n\f\u000e",
-    "\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&\u0002\u0002\u0002",
-    "\u00af\u0002(\u0003\u0002\u0002\u0002\u00040\u0003\u0002\u0002\u0002",
-    "\u00062\u0003\u0002\u0002\u0002\b9\u0003\u0002\u0002\u0002\nC\u0003",
-    "\u0002\u0002\u0002\fE\u0003\u0002\u0002\u0002\u000eI\u0003\u0002\u0002",
-    "\u0002\u0010]\u0003\u0002\u0002\u0002\u0012_\u0003\u0002\u0002\u0002",
-    "\u0014c\u0003\u0002\u0002\u0002\u0016e\u0003\u0002\u0002\u0002\u0018",
-    "p\u0003\u0002\u0002\u0002\u001a~\u0003\u0002\u0002\u0002\u001c\u0085",
-    "\u0003\u0002\u0002\u0002\u001e\u0087\u0003\u0002\u0002\u0002 \u0095",
-    "\u0003\u0002\u0002\u0002\"\u00a3\u0003\u0002\u0002\u0002$\u00ac\u0003",
-    "\u0002\u0002\u0002&\u00ae\u0003\u0002\u0002\u0002()\u0005\u0004\u0003",
-    "\u0002)*\u0005\u0012\n\u0002*\u0003\u0003\u0002\u0002\u0002+,\u0005",
-    "\u0006\u0004\u0002,-\u0007\u0003\u0002\u0002-.\u0005\u0004\u0003\u0002",
-    ".1\u0003\u0002\u0002\u0002/1\u0003\u0002\u0002\u00020+\u0003\u0002\u0002",
-    "\u00020/\u0003\u0002\u0002\u00021\u0005\u0003\u0002\u0002\u000223\u0007",
-    "\u0016\u0002\u000234\u0007\u0018\u0002\u00024\u0007\u0003\u0002\u0002",
-    "\u000256\u0005\n\u0006\u000267\u0005\b\u0005\u00027:\u0003\u0002\u0002",
-    "\u00028:\u0003\u0002\u0002\u000295\u0003\u0002\u0002\u000298\u0003\u0002",
-    "\u0002\u0002:\t\u0003\u0002\u0002\u0002;D\u0005\u0010\t\u0002<D\u0005",
-    "\u000e\b\u0002=>\u0005&\u0014\u0002>?\u0007\u0003\u0002\u0002?D\u0003",
-    "\u0002\u0002\u0002@A\u0005\f\u0007\u0002AB\u0007\u0003\u0002\u0002B",
-    "D\u0003\u0002\u0002\u0002C;\u0003\u0002\u0002\u0002C<\u0003\u0002\u0002",
-    "\u0002C=\u0003\u0002\u0002\u0002C@\u0003\u0002\u0002\u0002D\u000b\u0003",
-    "\u0002\u0002\u0002EF\u0007\u0018\u0002\u0002FG\u0007\u0012\u0002\u0002",
-    "GH\u0005\u0014\u000b\u0002H\r\u0003\u0002\u0002\u0002IJ\u0007\u0005",
-    "\u0002\u0002JK\u0007\u0006\u0002\u0002KL\u0005\u0014\u000b\u0002LM\u0007",
-    "\u0007\u0002\u0002MN\u0005\u0012\n\u0002N\u000f\u0003\u0002\u0002\u0002",
-    "OP\u0007\b\u0002\u0002PQ\u0007\u0006\u0002\u0002QR\u0005\u0014\u000b",
-    "\u0002RS\u0007\u0007\u0002\u0002ST\u0005\u0012\n\u0002T^\u0003\u0002",
-    "\u0002\u0002UV\u0007\b\u0002\u0002VW\u0007\u0006\u0002\u0002WX\u0005",
-    "\u0014\u000b\u0002XY\u0007\u0007\u0002\u0002YZ\u0005\u0012\n\u0002Z",
-    "[\u0007\t\u0002\u0002[\\\u0005\u0012\n\u0002\\^\u0003\u0002\u0002\u0002",
-    "]O\u0003\u0002\u0002\u0002]U\u0003\u0002\u0002\u0002^\u0011\u0003\u0002",
-    "\u0002\u0002_`\u0007\u000b\u0002\u0002`a\u0005\b\u0005\u0002ab\u0007",
-    "\f\u0002\u0002b\u0013\u0003\u0002\u0002\u0002cd\u0005\u0016\f\u0002",
-    "d\u0015\u0003\u0002\u0002\u0002ef\b\f\u0001\u0002fg\u0005\u0018\r\u0002",
-    "gm\u0003\u0002\u0002\u0002hi\f\u0004\u0002\u0002ij\u0007\u000e\u0002",
-    "\u0002jl\u0005\u0018\r\u0002kh\u0003\u0002\u0002\u0002lo\u0003\u0002",
-    "\u0002\u0002mk\u0003\u0002\u0002\u0002mn\u0003\u0002\u0002\u0002n\u0017",
-    "\u0003\u0002\u0002\u0002om\u0003\u0002\u0002\u0002pq\b\r\u0001\u0002",
-    "qr\u0005\u001a\u000e\u0002rx\u0003\u0002\u0002\u0002st\f\u0004\u0002",
-    "\u0002tu\u0007\u000f\u0002\u0002uw\u0005\u001a\u000e\u0002vs\u0003\u0002",
-    "\u0002\u0002wz\u0003\u0002\u0002\u0002xv\u0003\u0002\u0002\u0002xy\u0003",
-    "\u0002\u0002\u0002y\u0019\u0003\u0002\u0002\u0002zx\u0003\u0002\u0002",
-    "\u0002{|\u0007\u0010\u0002\u0002|\u007f\u0005\u001a\u000e\u0002}\u007f",
-    "\u0005\u001c\u000f\u0002~{\u0003\u0002\u0002\u0002~}\u0003\u0002\u0002",
-    "\u0002\u007f\u001b\u0003\u0002\u0002\u0002\u0080\u0081\u0005\u001e\u0010",
-    "\u0002\u0081\u0082\u0007\u0011\u0002\u0002\u0082\u0083\u0005\u001e\u0010",
-    "\u0002\u0083\u0086\u0003\u0002\u0002\u0002\u0084\u0086\u0005\u001e\u0010",
-    "\u0002\u0085\u0080\u0003\u0002\u0002\u0002\u0085\u0084\u0003\u0002\u0002",
-    "\u0002\u0086\u001d\u0003\u0002\u0002\u0002\u0087\u0088\b\u0010\u0001",
-    "\u0002\u0088\u0089\u0005 \u0011\u0002\u0089\u0092\u0003\u0002\u0002",
-    "\u0002\u008a\u008b\f\u0005\u0002\u0002\u008b\u008c\u0007\u0013\u0002",
-    "\u0002\u008c\u0091\u0005 \u0011\u0002\u008d\u008e\f\u0004\u0002\u0002",
-    "\u008e\u008f\u0007\u0015\u0002\u0002\u008f\u0091\u0005 \u0011\u0002",
-    "\u0090\u008a\u0003\u0002\u0002\u0002\u0090\u008d\u0003\u0002\u0002\u0002",
-    "\u0091\u0094\u0003\u0002\u0002\u0002\u0092\u0090\u0003\u0002\u0002\u0002",
-    "\u0092\u0093\u0003\u0002\u0002\u0002\u0093\u001f\u0003\u0002\u0002\u0002",
-    "\u0094\u0092\u0003\u0002\u0002\u0002\u0095\u0096\b\u0011\u0001\u0002",
-    "\u0096\u0097\u0005\"\u0012\u0002\u0097\u009d\u0003\u0002\u0002\u0002",
-    "\u0098\u0099\f\u0004\u0002\u0002\u0099\u009a\u0007\u0014\u0002\u0002",
-    "\u009a\u009c\u0005\"\u0012\u0002\u009b\u0098\u0003\u0002\u0002\u0002",
-    "\u009c\u009f\u0003\u0002\u0002\u0002\u009d\u009b\u0003\u0002\u0002\u0002",
-    "\u009d\u009e\u0003\u0002\u0002\u0002\u009e!\u0003\u0002\u0002\u0002",
-    "\u009f\u009d\u0003\u0002\u0002\u0002\u00a0\u00a1\u0007\u0015\u0002\u0002",
-    "\u00a1\u00a4\u0005\"\u0012\u0002\u00a2\u00a4\u0005$\u0013\u0002\u00a3",
-    "\u00a0\u0003\u0002\u0002\u0002\u00a3\u00a2\u0003\u0002\u0002\u0002\u00a4",
-    "#\u0003\u0002\u0002\u0002\u00a5\u00ad\u0007\r\u0002\u0002\u00a6\u00a7",
-    "\u0007\u0006\u0002\u0002\u00a7\u00a8\u0005\u0014\u000b\u0002\u00a8\u00a9",
-    "\u0007\u0007\u0002\u0002\u00a9\u00ad\u0003\u0002\u0002\u0002\u00aa\u00ad",
-    "\u0007\u0017\u0002\u0002\u00ab\u00ad\u0007\u0018\u0002\u0002\u00ac\u00a5",
-    "\u0003\u0002\u0002\u0002\u00ac\u00a6\u0003\u0002\u0002\u0002\u00ac\u00aa",
-    "\u0003\u0002\u0002\u0002\u00ac\u00ab\u0003\u0002\u0002\u0002\u00ad%",
-    "\u0003\u0002\u0002\u0002\u00ae\u00af\u0007\n\u0002\u0002\u00af\u00b0",
-    "\u0005\u0014\u000b\u0002\u00b0\'\u0003\u0002\u0002\u0002\u000f09C]m",
-    "x~\u0085\u0090\u0092\u009d\u00a3\u00ac"].join("");
+    "\te\n\t\u0003\n\u0003\n\u0003\n\u0003\n\u0003\u000b\u0003\u000b\u0003",
+    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0007\fs\n\f\f\f\u000e\f",
+    "v\u000b\f\u0003\r\u0003\r\u0003\r\u0003\r\u0003\r\u0003\r\u0007\r~\n",
+    "\r\f\r\u000e\r\u0081\u000b\r\u0003\u000e\u0003\u000e\u0003\u000e\u0005",
+    "\u000e\u0086\n\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f",
+    "\u0003\u000f\u0005\u000f\u008d\n\u000f\u0003\u0010\u0003\u0010\u0003",
+    "\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003",
+    "\u0010\u0007\u0010\u0098\n\u0010\f\u0010\u000e\u0010\u009b\u000b\u0010",
+    "\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011",
+    "\u0007\u0011\u00a3\n\u0011\f\u0011\u000e\u0011\u00a6\u000b\u0011\u0003",
+    "\u0012\u0003\u0012\u0003\u0012\u0005\u0012\u00ab\n\u0012\u0003\u0013",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0003\u0013\u0005\u0013\u00b5\n\u0013\u0003\u0014\u0003\u0014\u0003",
+    "\u0014\u0003\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003\u0016\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0005\u0016\u00da\n\u0016\u0003\u0016",
+    "\u0002\u0006\u0016\u0018\u001e \u0017\u0002\u0004\u0006\b\n\f\u000e",
+    "\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&(*\u0002\u0002",
+    "\u0002\u00de\u0002,\u0003\u0002\u0002\u0002\u00044\u0003\u0002\u0002",
+    "\u0002\u00066\u0003\u0002\u0002\u0002\b=\u0003\u0002\u0002\u0002\nJ",
+    "\u0003\u0002\u0002\u0002\fL\u0003\u0002\u0002\u0002\u000eP\u0003\u0002",
+    "\u0002\u0002\u0010d\u0003\u0002\u0002\u0002\u0012f\u0003\u0002\u0002",
+    "\u0002\u0014j\u0003\u0002\u0002\u0002\u0016l\u0003\u0002\u0002\u0002",
+    "\u0018w\u0003\u0002\u0002\u0002\u001a\u0085\u0003\u0002\u0002\u0002",
+    "\u001c\u008c\u0003\u0002\u0002\u0002\u001e\u008e\u0003\u0002\u0002\u0002",
+    " \u009c\u0003\u0002\u0002\u0002\"\u00aa\u0003\u0002\u0002\u0002$\u00b4",
+    "\u0003\u0002\u0002\u0002&\u00b6\u0003\u0002\u0002\u0002(\u00b9\u0003",
+    "\u0002\u0002\u0002*\u00d9\u0003\u0002\u0002\u0002,-\u0005\u0004\u0003",
+    "\u0002-.\u0005\u0012\n\u0002.\u0003\u0003\u0002\u0002\u0002/0\u0005",
+    "\u0006\u0004\u000201\u0007\u0003\u0002\u000212\u0005\u0004\u0003\u0002",
+    "25\u0003\u0002\u0002\u000235\u0003\u0002\u0002\u00024/\u0003\u0002\u0002",
+    "\u000243\u0003\u0002\u0002\u00025\u0005\u0003\u0002\u0002\u000267\u0007",
+    "\u001d\u0002\u000278\u0007\u001f\u0002\u00028\u0007\u0003\u0002\u0002",
+    "\u00029:\u0005\n\u0006\u0002:;\u0005\b\u0005\u0002;>\u0003\u0002\u0002",
+    "\u0002<>\u0003\u0002\u0002\u0002=9\u0003\u0002\u0002\u0002=<\u0003\u0002",
+    "\u0002\u0002>\t\u0003\u0002\u0002\u0002?@\u0005(\u0015\u0002@A\u0007",
+    "\u0003\u0002\u0002AK\u0003\u0002\u0002\u0002BK\u0005\u0010\t\u0002C",
+    "K\u0005\u000e\b\u0002DE\u0005&\u0014\u0002EF\u0007\u0003\u0002\u0002",
+    "FK\u0003\u0002\u0002\u0002GH\u0005\f\u0007\u0002HI\u0007\u0003\u0002",
+    "\u0002IK\u0003\u0002\u0002\u0002J?\u0003\u0002\u0002\u0002JB\u0003\u0002",
+    "\u0002\u0002JC\u0003\u0002\u0002\u0002JD\u0003\u0002\u0002\u0002JG\u0003",
+    "\u0002\u0002\u0002K\u000b\u0003\u0002\u0002\u0002LM\u0007\u001f\u0002",
+    "\u0002MN\u0007\u0019\u0002\u0002NO\u0005\u0014\u000b\u0002O\r\u0003",
+    "\u0002\u0002\u0002PQ\u0007\u0005\u0002\u0002QR\u0007\u0006\u0002\u0002",
+    "RS\u0005\u0014\u000b\u0002ST\u0007\u0007\u0002\u0002TU\u0005\u0012\n",
+    "\u0002U\u000f\u0003\u0002\u0002\u0002VW\u0007\b\u0002\u0002WX\u0007",
+    "\u0006\u0002\u0002XY\u0005\u0014\u000b\u0002YZ\u0007\u0007\u0002\u0002",
+    "Z[\u0005\u0012\n\u0002[e\u0003\u0002\u0002\u0002\\]\u0007\b\u0002\u0002",
+    "]^\u0007\u0006\u0002\u0002^_\u0005\u0014\u000b\u0002_`\u0007\u0007\u0002",
+    "\u0002`a\u0005\u0012\n\u0002ab\u0007\t\u0002\u0002bc\u0005\u0012\n\u0002",
+    "ce\u0003\u0002\u0002\u0002dV\u0003\u0002\u0002\u0002d\\\u0003\u0002",
+    "\u0002\u0002e\u0011\u0003\u0002\u0002\u0002fg\u0007\u0012\u0002\u0002",
+    "gh\u0005\b\u0005\u0002hi\u0007\u0013\u0002\u0002i\u0013\u0003\u0002",
+    "\u0002\u0002jk\u0005\u0016\f\u0002k\u0015\u0003\u0002\u0002\u0002lm",
+    "\b\f\u0001\u0002mn\u0005\u0018\r\u0002nt\u0003\u0002\u0002\u0002op\f",
+    "\u0004\u0002\u0002pq\u0007\u0015\u0002\u0002qs\u0005\u0018\r\u0002r",
+    "o\u0003\u0002\u0002\u0002sv\u0003\u0002\u0002\u0002tr\u0003\u0002\u0002",
+    "\u0002tu\u0003\u0002\u0002\u0002u\u0017\u0003\u0002\u0002\u0002vt\u0003",
+    "\u0002\u0002\u0002wx\b\r\u0001\u0002xy\u0005\u001a\u000e\u0002y\u007f",
+    "\u0003\u0002\u0002\u0002z{\f\u0004\u0002\u0002{|\u0007\u0016\u0002\u0002",
+    "|~\u0005\u001a\u000e\u0002}z\u0003\u0002\u0002\u0002~\u0081\u0003\u0002",
+    "\u0002\u0002\u007f}\u0003\u0002\u0002\u0002\u007f\u0080\u0003\u0002",
+    "\u0002\u0002\u0080\u0019\u0003\u0002\u0002\u0002\u0081\u007f\u0003\u0002",
+    "\u0002\u0002\u0082\u0083\u0007\u0017\u0002\u0002\u0083\u0086\u0005\u001a",
+    "\u000e\u0002\u0084\u0086\u0005\u001c\u000f\u0002\u0085\u0082\u0003\u0002",
+    "\u0002\u0002\u0085\u0084\u0003\u0002\u0002\u0002\u0086\u001b\u0003\u0002",
+    "\u0002\u0002\u0087\u0088\u0005\u001e\u0010\u0002\u0088\u0089\u0007\u0018",
+    "\u0002\u0002\u0089\u008a\u0005\u001e\u0010\u0002\u008a\u008d\u0003\u0002",
+    "\u0002\u0002\u008b\u008d\u0005\u001e\u0010\u0002\u008c\u0087\u0003\u0002",
+    "\u0002\u0002\u008c\u008b\u0003\u0002\u0002\u0002\u008d\u001d\u0003\u0002",
+    "\u0002\u0002\u008e\u008f\b\u0010\u0001\u0002\u008f\u0090\u0005 \u0011",
+    "\u0002\u0090\u0099\u0003\u0002\u0002\u0002\u0091\u0092\f\u0005\u0002",
+    "\u0002\u0092\u0093\u0007\u001a\u0002\u0002\u0093\u0098\u0005 \u0011",
+    "\u0002\u0094\u0095\f\u0004\u0002\u0002\u0095\u0096\u0007\u001c\u0002",
+    "\u0002\u0096\u0098\u0005 \u0011\u0002\u0097\u0091\u0003\u0002\u0002",
+    "\u0002\u0097\u0094\u0003\u0002\u0002\u0002\u0098\u009b\u0003\u0002\u0002",
+    "\u0002\u0099\u0097\u0003\u0002\u0002\u0002\u0099\u009a\u0003\u0002\u0002",
+    "\u0002\u009a\u001f\u0003\u0002\u0002\u0002\u009b\u0099\u0003\u0002\u0002",
+    "\u0002\u009c\u009d\b\u0011\u0001\u0002\u009d\u009e\u0005\"\u0012\u0002",
+    "\u009e\u00a4\u0003\u0002\u0002\u0002\u009f\u00a0\f\u0004\u0002\u0002",
+    "\u00a0\u00a1\u0007\u001b\u0002\u0002\u00a1\u00a3\u0005\"\u0012\u0002",
+    "\u00a2\u009f\u0003\u0002\u0002\u0002\u00a3\u00a6\u0003\u0002\u0002\u0002",
+    "\u00a4\u00a2\u0003\u0002\u0002\u0002\u00a4\u00a5\u0003\u0002\u0002\u0002",
+    "\u00a5!\u0003\u0002\u0002\u0002\u00a6\u00a4\u0003\u0002\u0002\u0002",
+    "\u00a7\u00a8\u0007\u001c\u0002\u0002\u00a8\u00ab\u0005\"\u0012\u0002",
+    "\u00a9\u00ab\u0005$\u0013\u0002\u00aa\u00a7\u0003\u0002\u0002\u0002",
+    "\u00aa\u00a9\u0003\u0002\u0002\u0002\u00ab#\u0003\u0002\u0002\u0002",
+    "\u00ac\u00b5\u0007\u0014\u0002\u0002\u00ad\u00ae\u0007\u0006\u0002\u0002",
+    "\u00ae\u00af\u0005\u0014\u000b\u0002\u00af\u00b0\u0007\u0007\u0002\u0002",
+    "\u00b0\u00b5\u0003\u0002\u0002\u0002\u00b1\u00b5\u0007\u001e\u0002\u0002",
+    "\u00b2\u00b5\u0007\u001f\u0002\u0002\u00b3\u00b5\u0005(\u0015\u0002",
+    "\u00b4\u00ac\u0003\u0002\u0002\u0002\u00b4\u00ad\u0003\u0002\u0002\u0002",
+    "\u00b4\u00b1\u0003\u0002\u0002\u0002\u00b4\u00b2\u0003\u0002\u0002\u0002",
+    "\u00b4\u00b3\u0003\u0002\u0002\u0002\u00b5%\u0003\u0002\u0002\u0002",
+    "\u00b6\u00b7\u0007\n\u0002\u0002\u00b7\u00b8\u0005\u0014\u000b\u0002",
+    "\u00b8\'\u0003\u0002\u0002\u0002\u00b9\u00ba\u0005*\u0016\u0002\u00ba",
+    ")\u0003\u0002\u0002\u0002\u00bb\u00bc\u0007\u000b\u0002\u0002\u00bc",
+    "\u00bd\u0007\u0006\u0002\u0002\u00bd\u00be\u0005\u0014\u000b\u0002\u00be",
+    "\u00bf\u0007\u0007\u0002\u0002\u00bf\u00da\u0003\u0002\u0002\u0002\u00c0",
+    "\u00c1\u0007\f\u0002\u0002\u00c1\u00c2\u0007\u0006\u0002\u0002\u00c2",
+    "\u00da\u0007\u0007\u0002\u0002\u00c3\u00c4\u0007\r\u0002\u0002\u00c4",
+    "\u00c5\u0007\u0006\u0002\u0002\u00c5\u00c6\u0005\u0014\u000b\u0002\u00c6",
+    "\u00c7\u0007\u0007\u0002\u0002\u00c7\u00da\u0003\u0002\u0002\u0002\u00c8",
+    "\u00c9\u0007\u000f\u0002\u0002\u00c9\u00ca\u0007\u0006\u0002\u0002\u00ca",
+    "\u00cb\u0005\u0014\u000b\u0002\u00cb\u00cc\u0007\u0007\u0002\u0002\u00cc",
+    "\u00da\u0003\u0002\u0002\u0002\u00cd\u00ce\u0007\u0010\u0002\u0002\u00ce",
+    "\u00cf\u0007\u0006\u0002\u0002\u00cf\u00d0\u0005\u0014\u000b\u0002\u00d0",
+    "\u00d1\u0007\u0011\u0002\u0002\u00d1\u00d2\u0005\u0014\u000b\u0002\u00d2",
+    "\u00d3\u0007\u0007\u0002\u0002\u00d3\u00da\u0003\u0002\u0002\u0002\u00d4",
+    "\u00d5\u0007\u000e\u0002\u0002\u00d5\u00d6\u0007\u0006\u0002\u0002\u00d6",
+    "\u00d7\u0005\u0014\u000b\u0002\u00d7\u00d8\u0007\u0007\u0002\u0002\u00d8",
+    "\u00da\u0003\u0002\u0002\u0002\u00d9\u00bb\u0003\u0002\u0002\u0002\u00d9",
+    "\u00c0\u0003\u0002\u0002\u0002\u00d9\u00c3\u0003\u0002\u0002\u0002\u00d9",
+    "\u00c8\u0003\u0002\u0002\u0002\u00d9\u00cd\u0003\u0002\u0002\u0002\u00d9",
+    "\u00d4\u0003\u0002\u0002\u0002\u00da+\u0003\u0002\u0002\u0002\u0010",
+    "4=Jdt\u007f\u0085\u008c\u0097\u0099\u00a4\u00aa\u00b4\u00d9"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -117,18 +148,21 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, "';'", null, "'while'", "'('", "')'", "'if'", 
-                     "'else'", "'return'", "'{'", "'}'", null, "'or'", "'and'", 
-                     "'not'", null, "'='", "'+'", null, "'-'" ];
+                     "'else'", "'return'", "'print'", "'input'", "'open'", 
+                     "'close'", "'read'", "'write'", "','", "'{'", "'}'", 
+                     null, "'or'", "'and'", "'not'", null, "'='", "'+'", 
+                     null, "'-'" ];
 
 var symbolicNames = [ null, "SEMI", "COMMENT", "WHILE", "LP", "RP", "IF", 
-                      "ELSE", "RETURN", "LBR", "RBR", "NUM", "OR", "AND", 
-                      "NOT", "RELOP", "EQ", "PLUS", "MULOP", "MINUS", "TYPE", 
-                      "STRING_CONSTANT", "ID", "WHITESPACE" ];
+                      "ELSE", "RETURN", "PRINT", "INPUT", "OPEN", "CLOSE", 
+                      "READ", "WRITE", "CMA", "LBR", "RBR", "NUM", "OR", 
+                      "AND", "NOT", "RELOP", "EQ", "PLUS", "MULOP", "MINUS", 
+                      "TYPE", "STRING_CONSTANT", "ID", "WHITESPACE" ];
 
 var ruleNames =  [ "program", "var_decl_list", "var_decl", "stmts", "stmt", 
                    "assign", "loop", "cond", "braceblock", "expr", "orexp", 
                    "andexp", "notexp", "rel", "sum", "term", "neg", "factor", 
-                   "return_stmt" ];
+                   "return_stmt", "func_call", "builtin_func_call" ];
 
 function grammarKSParser (input) {
 	antlr4.Parser.call(this, input);
@@ -157,21 +191,28 @@ grammarKSParser.RP = 5;
 grammarKSParser.IF = 6;
 grammarKSParser.ELSE = 7;
 grammarKSParser.RETURN = 8;
-grammarKSParser.LBR = 9;
-grammarKSParser.RBR = 10;
-grammarKSParser.NUM = 11;
-grammarKSParser.OR = 12;
-grammarKSParser.AND = 13;
-grammarKSParser.NOT = 14;
-grammarKSParser.RELOP = 15;
-grammarKSParser.EQ = 16;
-grammarKSParser.PLUS = 17;
-grammarKSParser.MULOP = 18;
-grammarKSParser.MINUS = 19;
-grammarKSParser.TYPE = 20;
-grammarKSParser.STRING_CONSTANT = 21;
-grammarKSParser.ID = 22;
-grammarKSParser.WHITESPACE = 23;
+grammarKSParser.PRINT = 9;
+grammarKSParser.INPUT = 10;
+grammarKSParser.OPEN = 11;
+grammarKSParser.CLOSE = 12;
+grammarKSParser.READ = 13;
+grammarKSParser.WRITE = 14;
+grammarKSParser.CMA = 15;
+grammarKSParser.LBR = 16;
+grammarKSParser.RBR = 17;
+grammarKSParser.NUM = 18;
+grammarKSParser.OR = 19;
+grammarKSParser.AND = 20;
+grammarKSParser.NOT = 21;
+grammarKSParser.RELOP = 22;
+grammarKSParser.EQ = 23;
+grammarKSParser.PLUS = 24;
+grammarKSParser.MULOP = 25;
+grammarKSParser.MINUS = 26;
+grammarKSParser.TYPE = 27;
+grammarKSParser.STRING_CONSTANT = 28;
+grammarKSParser.ID = 29;
+grammarKSParser.WHITESPACE = 30;
 
 grammarKSParser.RULE_program = 0;
 grammarKSParser.RULE_var_decl_list = 1;
@@ -192,6 +233,8 @@ grammarKSParser.RULE_term = 15;
 grammarKSParser.RULE_neg = 16;
 grammarKSParser.RULE_factor = 17;
 grammarKSParser.RULE_return_stmt = 18;
+grammarKSParser.RULE_func_call = 19;
+grammarKSParser.RULE_builtin_func_call = 20;
 
 
 function ProgramContext(parser, parent, invokingState) {
@@ -241,9 +284,9 @@ grammarKSParser.prototype.program = function() {
     this.enterRule(localctx, 0, grammarKSParser.RULE_program);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 38;
+        this.state = 42;
         this.var_decl_list();
-        this.state = 39;
+        this.state = 43;
         this.braceblock();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -310,16 +353,16 @@ grammarKSParser.prototype.var_decl_list = function() {
     var localctx = new Var_decl_listContext(this, this._ctx, this.state);
     this.enterRule(localctx, 2, grammarKSParser.RULE_var_decl_list);
     try {
-        this.state = 46;
+        this.state = 50;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case grammarKSParser.TYPE:
             this.enterOuterAlt(localctx, 1);
-            this.state = 41;
+            this.state = 45;
             this.var_decl();
-            this.state = 42;
+            this.state = 46;
             this.match(grammarKSParser.SEMI);
-            this.state = 43;
+            this.state = 47;
             this.var_decl_list();
             break;
         case grammarKSParser.LBR:
@@ -391,9 +434,9 @@ grammarKSParser.prototype.var_decl = function() {
     this.enterRule(localctx, 4, grammarKSParser.RULE_var_decl);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 48;
+        this.state = 52;
         this.match(grammarKSParser.TYPE);
-        this.state = 49;
+        this.state = 53;
         this.match(grammarKSParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -456,17 +499,23 @@ grammarKSParser.prototype.stmts = function() {
     var localctx = new StmtsContext(this, this._ctx, this.state);
     this.enterRule(localctx, 6, grammarKSParser.RULE_stmts);
     try {
-        this.state = 55;
+        this.state = 59;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case grammarKSParser.WHILE:
         case grammarKSParser.IF:
         case grammarKSParser.RETURN:
+        case grammarKSParser.PRINT:
+        case grammarKSParser.INPUT:
+        case grammarKSParser.OPEN:
+        case grammarKSParser.CLOSE:
+        case grammarKSParser.READ:
+        case grammarKSParser.WRITE:
         case grammarKSParser.ID:
             this.enterOuterAlt(localctx, 1);
-            this.state = 51;
+            this.state = 55;
             this.stmt();
-            this.state = 52;
+            this.state = 56;
             this.stmts();
             break;
         case grammarKSParser.RBR:
@@ -507,6 +556,14 @@ function StmtContext(parser, parent, invokingState) {
 StmtContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 StmtContext.prototype.constructor = StmtContext;
 
+StmtContext.prototype.func_call = function() {
+    return this.getTypedRuleContext(Func_callContext,0);
+};
+
+StmtContext.prototype.SEMI = function() {
+    return this.getToken(grammarKSParser.SEMI, 0);
+};
+
 StmtContext.prototype.cond = function() {
     return this.getTypedRuleContext(CondContext,0);
 };
@@ -517,10 +574,6 @@ StmtContext.prototype.loop = function() {
 
 StmtContext.prototype.return_stmt = function() {
     return this.getTypedRuleContext(Return_stmtContext,0);
-};
-
-StmtContext.prototype.SEMI = function() {
-    return this.getToken(grammarKSParser.SEMI, 0);
 };
 
 StmtContext.prototype.assign = function() {
@@ -549,31 +602,43 @@ grammarKSParser.prototype.stmt = function() {
     var localctx = new StmtContext(this, this._ctx, this.state);
     this.enterRule(localctx, 8, grammarKSParser.RULE_stmt);
     try {
-        this.state = 65;
+        this.state = 72;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
-        case grammarKSParser.IF:
+        case grammarKSParser.PRINT:
+        case grammarKSParser.INPUT:
+        case grammarKSParser.OPEN:
+        case grammarKSParser.CLOSE:
+        case grammarKSParser.READ:
+        case grammarKSParser.WRITE:
             this.enterOuterAlt(localctx, 1);
-            this.state = 57;
+            this.state = 61;
+            this.func_call();
+            this.state = 62;
+            this.match(grammarKSParser.SEMI);
+            break;
+        case grammarKSParser.IF:
+            this.enterOuterAlt(localctx, 2);
+            this.state = 64;
             this.cond();
             break;
         case grammarKSParser.WHILE:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 58;
+            this.enterOuterAlt(localctx, 3);
+            this.state = 65;
             this.loop();
             break;
         case grammarKSParser.RETURN:
-            this.enterOuterAlt(localctx, 3);
-            this.state = 59;
+            this.enterOuterAlt(localctx, 4);
+            this.state = 66;
             this.return_stmt();
-            this.state = 60;
+            this.state = 67;
             this.match(grammarKSParser.SEMI);
             break;
         case grammarKSParser.ID:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 62;
+            this.enterOuterAlt(localctx, 5);
+            this.state = 69;
             this.assign();
-            this.state = 63;
+            this.state = 70;
             this.match(grammarKSParser.SEMI);
             break;
         default:
@@ -645,11 +710,11 @@ grammarKSParser.prototype.assign = function() {
     this.enterRule(localctx, 10, grammarKSParser.RULE_assign);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 67;
+        this.state = 74;
         this.match(grammarKSParser.ID);
-        this.state = 68;
+        this.state = 75;
         this.match(grammarKSParser.EQ);
-        this.state = 69;
+        this.state = 76;
         this.expr();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -725,15 +790,15 @@ grammarKSParser.prototype.loop = function() {
     this.enterRule(localctx, 12, grammarKSParser.RULE_loop);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 71;
+        this.state = 78;
         this.match(grammarKSParser.WHILE);
-        this.state = 72;
+        this.state = 79;
         this.match(grammarKSParser.LP);
-        this.state = 73;
+        this.state = 80;
         this.expr();
-        this.state = 74;
+        this.state = 81;
         this.match(grammarKSParser.RP);
-        this.state = 75;
+        this.state = 82;
         this.braceblock();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -819,39 +884,39 @@ grammarKSParser.prototype.cond = function() {
     var localctx = new CondContext(this, this._ctx, this.state);
     this.enterRule(localctx, 14, grammarKSParser.RULE_cond);
     try {
-        this.state = 91;
+        this.state = 98;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
-            this.state = 77;
+            this.state = 84;
             this.match(grammarKSParser.IF);
-            this.state = 78;
+            this.state = 85;
             this.match(grammarKSParser.LP);
-            this.state = 79;
+            this.state = 86;
             this.expr();
-            this.state = 80;
+            this.state = 87;
             this.match(grammarKSParser.RP);
-            this.state = 81;
+            this.state = 88;
             this.braceblock();
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 83;
+            this.state = 90;
             this.match(grammarKSParser.IF);
-            this.state = 84;
+            this.state = 91;
             this.match(grammarKSParser.LP);
-            this.state = 85;
+            this.state = 92;
             this.expr();
-            this.state = 86;
+            this.state = 93;
             this.match(grammarKSParser.RP);
-            this.state = 87;
+            this.state = 94;
             this.braceblock();
-            this.state = 88;
+            this.state = 95;
             this.match(grammarKSParser.ELSE);
-            this.state = 89;
+            this.state = 96;
             this.braceblock();
             break;
 
@@ -922,11 +987,11 @@ grammarKSParser.prototype.braceblock = function() {
     this.enterRule(localctx, 16, grammarKSParser.RULE_braceblock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 93;
+        this.state = 100;
         this.match(grammarKSParser.LBR);
-        this.state = 94;
+        this.state = 101;
         this.stmts();
-        this.state = 95;
+        this.state = 102;
         this.match(grammarKSParser.RBR);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -986,7 +1051,7 @@ grammarKSParser.prototype.expr = function() {
     this.enterRule(localctx, 18, grammarKSParser.RULE_expr);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 97;
+        this.state = 104;
         this.orexp(0);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1057,10 +1122,10 @@ grammarKSParser.prototype.orexp = function(_p) {
     this.enterRecursionRule(localctx, 20, grammarKSParser.RULE_orexp, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 100;
+        this.state = 107;
         this.andexp(0);
         this._ctx.stop = this._input.LT(-1);
-        this.state = 107;
+        this.state = 114;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,4,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1071,16 +1136,16 @@ grammarKSParser.prototype.orexp = function(_p) {
                 _prevctx = localctx;
                 localctx = new OrexpContext(this, _parentctx, _parentState);
                 this.pushNewRecursionContext(localctx, _startState, grammarKSParser.RULE_orexp);
-                this.state = 102;
+                this.state = 109;
                 if (!( this.precpred(this._ctx, 2))) {
                     throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 2)");
                 }
-                this.state = 103;
+                this.state = 110;
                 this.match(grammarKSParser.OR);
-                this.state = 104;
+                this.state = 111;
                 this.andexp(0); 
             }
-            this.state = 109;
+            this.state = 116;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,4,this._ctx);
         }
@@ -1154,10 +1219,10 @@ grammarKSParser.prototype.andexp = function(_p) {
     this.enterRecursionRule(localctx, 22, grammarKSParser.RULE_andexp, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 111;
+        this.state = 118;
         this.notexp();
         this._ctx.stop = this._input.LT(-1);
-        this.state = 118;
+        this.state = 125;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,5,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1168,16 +1233,16 @@ grammarKSParser.prototype.andexp = function(_p) {
                 _prevctx = localctx;
                 localctx = new AndexpContext(this, _parentctx, _parentState);
                 this.pushNewRecursionContext(localctx, _startState, grammarKSParser.RULE_andexp);
-                this.state = 113;
+                this.state = 120;
                 if (!( this.precpred(this._ctx, 2))) {
                     throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 2)");
                 }
-                this.state = 114;
+                this.state = 121;
                 this.match(grammarKSParser.AND);
-                this.state = 115;
+                this.state = 122;
                 this.notexp(); 
             }
-            this.state = 120;
+            this.state = 127;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,5,this._ctx);
         }
@@ -1247,23 +1312,29 @@ grammarKSParser.prototype.notexp = function() {
     var localctx = new NotexpContext(this, this._ctx, this.state);
     this.enterRule(localctx, 24, grammarKSParser.RULE_notexp);
     try {
-        this.state = 124;
+        this.state = 131;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case grammarKSParser.NOT:
             this.enterOuterAlt(localctx, 1);
-            this.state = 121;
+            this.state = 128;
             this.match(grammarKSParser.NOT);
-            this.state = 122;
+            this.state = 129;
             this.notexp();
             break;
         case grammarKSParser.LP:
+        case grammarKSParser.PRINT:
+        case grammarKSParser.INPUT:
+        case grammarKSParser.OPEN:
+        case grammarKSParser.CLOSE:
+        case grammarKSParser.READ:
+        case grammarKSParser.WRITE:
         case grammarKSParser.NUM:
         case grammarKSParser.MINUS:
         case grammarKSParser.STRING_CONSTANT:
         case grammarKSParser.ID:
             this.enterOuterAlt(localctx, 2);
-            this.state = 123;
+            this.state = 130;
             this.rel();
             break;
         default:
@@ -1337,23 +1408,23 @@ grammarKSParser.prototype.rel = function() {
     var localctx = new RelContext(this, this._ctx, this.state);
     this.enterRule(localctx, 26, grammarKSParser.RULE_rel);
     try {
-        this.state = 131;
+        this.state = 138;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
-            this.state = 126;
+            this.state = 133;
             this.sum(0);
-            this.state = 127;
+            this.state = 134;
             this.match(grammarKSParser.RELOP);
-            this.state = 128;
+            this.state = 135;
             this.sum(0);
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 130;
+            this.state = 137;
             this.sum(0);
             break;
 
@@ -1431,10 +1502,10 @@ grammarKSParser.prototype.sum = function(_p) {
     this.enterRecursionRule(localctx, 28, grammarKSParser.RULE_sum, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 134;
+        this.state = 141;
         this.term(0);
         this._ctx.stop = this._input.LT(-1);
-        this.state = 144;
+        this.state = 151;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,9,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1443,39 +1514,39 @@ grammarKSParser.prototype.sum = function(_p) {
                     this.triggerExitRuleEvent();
                 }
                 _prevctx = localctx;
-                this.state = 142;
+                this.state = 149;
                 this._errHandler.sync(this);
                 var la_ = this._interp.adaptivePredict(this._input,8,this._ctx);
                 switch(la_) {
                 case 1:
                     localctx = new SumContext(this, _parentctx, _parentState);
                     this.pushNewRecursionContext(localctx, _startState, grammarKSParser.RULE_sum);
-                    this.state = 136;
+                    this.state = 143;
                     if (!( this.precpred(this._ctx, 3))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 3)");
                     }
-                    this.state = 137;
+                    this.state = 144;
                     this.match(grammarKSParser.PLUS);
-                    this.state = 138;
+                    this.state = 145;
                     this.term(0);
                     break;
 
                 case 2:
                     localctx = new SumContext(this, _parentctx, _parentState);
                     this.pushNewRecursionContext(localctx, _startState, grammarKSParser.RULE_sum);
-                    this.state = 139;
+                    this.state = 146;
                     if (!( this.precpred(this._ctx, 2))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 2)");
                     }
-                    this.state = 140;
+                    this.state = 147;
                     this.match(grammarKSParser.MINUS);
-                    this.state = 141;
+                    this.state = 148;
                     this.term(0);
                     break;
 
                 } 
             }
-            this.state = 146;
+            this.state = 153;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,9,this._ctx);
         }
@@ -1549,10 +1620,10 @@ grammarKSParser.prototype.term = function(_p) {
     this.enterRecursionRule(localctx, 30, grammarKSParser.RULE_term, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 148;
+        this.state = 155;
         this.neg();
         this._ctx.stop = this._input.LT(-1);
-        this.state = 155;
+        this.state = 162;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,10,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1563,16 +1634,16 @@ grammarKSParser.prototype.term = function(_p) {
                 _prevctx = localctx;
                 localctx = new TermContext(this, _parentctx, _parentState);
                 this.pushNewRecursionContext(localctx, _startState, grammarKSParser.RULE_term);
-                this.state = 150;
+                this.state = 157;
                 if (!( this.precpred(this._ctx, 2))) {
                     throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 2)");
                 }
-                this.state = 151;
+                this.state = 158;
                 this.match(grammarKSParser.MULOP);
-                this.state = 152;
+                this.state = 159;
                 this.neg(); 
             }
-            this.state = 157;
+            this.state = 164;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,10,this._ctx);
         }
@@ -1642,22 +1713,28 @@ grammarKSParser.prototype.neg = function() {
     var localctx = new NegContext(this, this._ctx, this.state);
     this.enterRule(localctx, 32, grammarKSParser.RULE_neg);
     try {
-        this.state = 161;
+        this.state = 168;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case grammarKSParser.MINUS:
             this.enterOuterAlt(localctx, 1);
-            this.state = 158;
+            this.state = 165;
             this.match(grammarKSParser.MINUS);
-            this.state = 159;
+            this.state = 166;
             this.neg();
             break;
         case grammarKSParser.LP:
+        case grammarKSParser.PRINT:
+        case grammarKSParser.INPUT:
+        case grammarKSParser.OPEN:
+        case grammarKSParser.CLOSE:
+        case grammarKSParser.READ:
+        case grammarKSParser.WRITE:
         case grammarKSParser.NUM:
         case grammarKSParser.STRING_CONSTANT:
         case grammarKSParser.ID:
             this.enterOuterAlt(localctx, 2);
-            this.state = 160;
+            this.state = 167;
             this.factor();
             break;
         default:
@@ -1718,6 +1795,10 @@ FactorContext.prototype.ID = function() {
     return this.getToken(grammarKSParser.ID, 0);
 };
 
+FactorContext.prototype.func_call = function() {
+    return this.getTypedRuleContext(Func_callContext,0);
+};
+
 FactorContext.prototype.enterRule = function(listener) {
     if(listener instanceof grammarKSListener ) {
         listener.enterFactor(this);
@@ -1740,32 +1821,42 @@ grammarKSParser.prototype.factor = function() {
     var localctx = new FactorContext(this, this._ctx, this.state);
     this.enterRule(localctx, 34, grammarKSParser.RULE_factor);
     try {
-        this.state = 170;
+        this.state = 178;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case grammarKSParser.NUM:
             this.enterOuterAlt(localctx, 1);
-            this.state = 163;
+            this.state = 170;
             this.match(grammarKSParser.NUM);
             break;
         case grammarKSParser.LP:
             this.enterOuterAlt(localctx, 2);
-            this.state = 164;
+            this.state = 171;
             this.match(grammarKSParser.LP);
-            this.state = 165;
+            this.state = 172;
             this.expr();
-            this.state = 166;
+            this.state = 173;
             this.match(grammarKSParser.RP);
             break;
         case grammarKSParser.STRING_CONSTANT:
             this.enterOuterAlt(localctx, 3);
-            this.state = 168;
+            this.state = 175;
             this.match(grammarKSParser.STRING_CONSTANT);
             break;
         case grammarKSParser.ID:
             this.enterOuterAlt(localctx, 4);
-            this.state = 169;
+            this.state = 176;
             this.match(grammarKSParser.ID);
+            break;
+        case grammarKSParser.PRINT:
+        case grammarKSParser.INPUT:
+        case grammarKSParser.OPEN:
+        case grammarKSParser.CLOSE:
+        case grammarKSParser.READ:
+        case grammarKSParser.WRITE:
+            this.enterOuterAlt(localctx, 5);
+            this.state = 177;
+            this.func_call();
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
@@ -1832,10 +1923,244 @@ grammarKSParser.prototype.return_stmt = function() {
     this.enterRule(localctx, 36, grammarKSParser.RULE_return_stmt);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 172;
+        this.state = 180;
         this.match(grammarKSParser.RETURN);
-        this.state = 173;
+        this.state = 181;
         this.expr();
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function Func_callContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = grammarKSParser.RULE_func_call;
+    return this;
+}
+
+Func_callContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+Func_callContext.prototype.constructor = Func_callContext;
+
+Func_callContext.prototype.builtin_func_call = function() {
+    return this.getTypedRuleContext(Builtin_func_callContext,0);
+};
+
+Func_callContext.prototype.enterRule = function(listener) {
+    if(listener instanceof grammarKSListener ) {
+        listener.enterFunc_call(this);
+	}
+};
+
+Func_callContext.prototype.exitRule = function(listener) {
+    if(listener instanceof grammarKSListener ) {
+        listener.exitFunc_call(this);
+	}
+};
+
+
+
+
+grammarKSParser.Func_callContext = Func_callContext;
+
+grammarKSParser.prototype.func_call = function() {
+
+    var localctx = new Func_callContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 38, grammarKSParser.RULE_func_call);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 183;
+        this.builtin_func_call();
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function Builtin_func_callContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = grammarKSParser.RULE_builtin_func_call;
+    return this;
+}
+
+Builtin_func_callContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+Builtin_func_callContext.prototype.constructor = Builtin_func_callContext;
+
+Builtin_func_callContext.prototype.PRINT = function() {
+    return this.getToken(grammarKSParser.PRINT, 0);
+};
+
+Builtin_func_callContext.prototype.LP = function() {
+    return this.getToken(grammarKSParser.LP, 0);
+};
+
+Builtin_func_callContext.prototype.expr = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExprContext);
+    } else {
+        return this.getTypedRuleContext(ExprContext,i);
+    }
+};
+
+Builtin_func_callContext.prototype.RP = function() {
+    return this.getToken(grammarKSParser.RP, 0);
+};
+
+Builtin_func_callContext.prototype.INPUT = function() {
+    return this.getToken(grammarKSParser.INPUT, 0);
+};
+
+Builtin_func_callContext.prototype.OPEN = function() {
+    return this.getToken(grammarKSParser.OPEN, 0);
+};
+
+Builtin_func_callContext.prototype.READ = function() {
+    return this.getToken(grammarKSParser.READ, 0);
+};
+
+Builtin_func_callContext.prototype.WRITE = function() {
+    return this.getToken(grammarKSParser.WRITE, 0);
+};
+
+Builtin_func_callContext.prototype.CMA = function() {
+    return this.getToken(grammarKSParser.CMA, 0);
+};
+
+Builtin_func_callContext.prototype.CLOSE = function() {
+    return this.getToken(grammarKSParser.CLOSE, 0);
+};
+
+Builtin_func_callContext.prototype.enterRule = function(listener) {
+    if(listener instanceof grammarKSListener ) {
+        listener.enterBuiltin_func_call(this);
+	}
+};
+
+Builtin_func_callContext.prototype.exitRule = function(listener) {
+    if(listener instanceof grammarKSListener ) {
+        listener.exitBuiltin_func_call(this);
+	}
+};
+
+
+
+
+grammarKSParser.Builtin_func_callContext = Builtin_func_callContext;
+
+grammarKSParser.prototype.builtin_func_call = function() {
+
+    var localctx = new Builtin_func_callContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 40, grammarKSParser.RULE_builtin_func_call);
+    try {
+        this.state = 215;
+        this._errHandler.sync(this);
+        switch(this._input.LA(1)) {
+        case grammarKSParser.PRINT:
+            this.enterOuterAlt(localctx, 1);
+            this.state = 185;
+            this.match(grammarKSParser.PRINT);
+            this.state = 186;
+            this.match(grammarKSParser.LP);
+            this.state = 187;
+            this.expr();
+            this.state = 188;
+            this.match(grammarKSParser.RP);
+            break;
+        case grammarKSParser.INPUT:
+            this.enterOuterAlt(localctx, 2);
+            this.state = 190;
+            this.match(grammarKSParser.INPUT);
+            this.state = 191;
+            this.match(grammarKSParser.LP);
+            this.state = 192;
+            this.match(grammarKSParser.RP);
+            break;
+        case grammarKSParser.OPEN:
+            this.enterOuterAlt(localctx, 3);
+            this.state = 193;
+            this.match(grammarKSParser.OPEN);
+            this.state = 194;
+            this.match(grammarKSParser.LP);
+            this.state = 195;
+            this.expr();
+            this.state = 196;
+            this.match(grammarKSParser.RP);
+            break;
+        case grammarKSParser.READ:
+            this.enterOuterAlt(localctx, 4);
+            this.state = 198;
+            this.match(grammarKSParser.READ);
+            this.state = 199;
+            this.match(grammarKSParser.LP);
+            this.state = 200;
+            this.expr();
+            this.state = 201;
+            this.match(grammarKSParser.RP);
+            break;
+        case grammarKSParser.WRITE:
+            this.enterOuterAlt(localctx, 5);
+            this.state = 203;
+            this.match(grammarKSParser.WRITE);
+            this.state = 204;
+            this.match(grammarKSParser.LP);
+            this.state = 205;
+            this.expr();
+            this.state = 206;
+            this.match(grammarKSParser.CMA);
+            this.state = 207;
+            this.expr();
+            this.state = 208;
+            this.match(grammarKSParser.RP);
+            break;
+        case grammarKSParser.CLOSE:
+            this.enterOuterAlt(localctx, 6);
+            this.state = 210;
+            this.match(grammarKSParser.CLOSE);
+            this.state = 211;
+            this.match(grammarKSParser.LP);
+            this.state = 212;
+            this.expr();
+            this.state = 213;
+            this.match(grammarKSParser.RP);
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

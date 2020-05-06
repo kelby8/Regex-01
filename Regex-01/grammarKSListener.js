@@ -182,5 +182,23 @@ grammarKSListener.prototype.exitReturn_stmt = function(ctx) {
 };
 
 
+// Enter a parse tree produced by grammarKSParser#func_call.
+grammarKSListener.prototype.enterFunc_call = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#func_call.
+grammarKSListener.prototype.exitFunc_call = function(ctx) {
+};
+
+
+// Enter a parse tree produced by grammarKSParser#builtin_func_call.
+grammarKSListener.prototype.enterBuiltin_func_call = function(ctx) {
+};
+
+// Exit a parse tree produced by grammarKSParser#builtin_func_call.
+grammarKSListener.prototype.exitBuiltin_func_call = function(ctx) {
+};
+
+
 
 exports.grammarKSListener = grammarKSListener;
