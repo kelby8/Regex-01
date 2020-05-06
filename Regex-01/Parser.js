@@ -3,16 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let antlr4 = require('./antlr4');
 let Lexer = require('./grammarKSLexer.js').grammarKSLexer;
 let Parser = require('./grammarKSParser.js').grammarKSParser;
-let asmCode = [];
 var VarType;
 (function (VarType) {
     VarType[VarType["INTEGER"] = 0] = "INTEGER";
+    VarType[VarType["STRING"] = 1] = "STRING";
+    VarType[VarType["VOID"] = 2] = "VOID";
 })(VarType || (VarType = {}));
-let labelCounter = 0;
-function label() {
-    let s = "lbl" + labelCounter;
-    labelCounter++;
-    return s;
+function ICE() {
+    throw new Error("ICE: Internal Compilier Error");
+}
+function moveBytesFromStackToLocation(loc) {
+    emit("pop rax");
+    emit(`mov [${loc}], rax`);
 }
 function convertStackTopToZeroOrOneInteger(type) {
     if (type == VarType.INTEGER) {
@@ -26,21 +28,147 @@ function convertStackTopToZeroOrOneInteger(type) {
         ICE();
     }
 }
-function ICE() {
-    throw new Error("ICE: Internal Compilier Error");
+let labelCounter = 0;
+function label() {
+    let s = "lbl" + labelCounter;
+    labelCounter++;
+    return s;
+}
+class Token {
+    constructor(sym, line, lexeme) {
+        this.sym = sym;
+        this.line = line;
+        this.lexeme = lexeme;
+    }
+    toString() {
+        return `${this.sym} ${this.line} ${this.lexeme}`;
+    }
+}
+class TreeNode {
+    constructor(sym, token) {
+        this.sym = sym;
+        this.token = token;
+        this.children = [];
+    }
+    toString() {
+        return `${this.sym} ${this.token} ${this.children}`;
+    }
+}
+class VarInfo {
+    //also the line number, if you want
+    constructor(t, location) {
+        this.location = location;
+        this.type = t;
+    }
+}
+class SymbolTable {
+    constructor() {
+        this.table = new Map();
+    }
+    get(name) {
+        if (!this.table.has(name)) {
+            console.log("non-existant");
+            ICE();
+        }
+        return this.table.get(name);
+    }
+    set(name, v) {
+        if (this.table.has(name)) {
+            console.log("redeclaring", name);
+            ICE();
+        }
+        this.table.set(name, v);
+    }
+    has(name) {
+        return this.table.has(name);
+    }
+}
+class ErrorHandler {
+    syntaxError(rec, sym, line, column, msg, e) {
+        console.log("Syntax error:", msg, "on line", line, "at column", column);
+        throw new Error("Syntax error in ANTLR parse");
+    }
+}
+let asmCode = [];
+let symtable = new SymbolTable();
+let stringPool = new Map();
+function vardecllistNodeCode(n) {
+    //var_decl_list : var_decl SEMI var_decl_list | ;
+    if (n.children.length == 0) {
+        return;
+    }
+    else {
+        vardeclNodeCode(n.children[0]);
+        vardecllistNodeCode(n.children[2]);
+    }
+}
+function vardeclNodeCode(n) {
+    //var-decl -> TYPE ID
+    console.log("problem here?");
+    console.log(n);
+    let vname = n.children[1].token.lexeme;
+    console.log("nope, no problem here");
+    let vtype = typeNodeCode(n.children[0]);
+    symtable.set(vname, new VarInfo(vtype, label()));
+}
+function typeNodeCode(n) {
+    //TYPE : 'int' | 'string' | 'double';
+    switch (n.token.lexeme) {
+        case "int":
+            return VarType.INTEGER;
+        case "string":
+            return VarType.STRING;
+        case "double":
+            return VarType.INTEGER;
+    }
 }
 function emit(instr) {
     asmCode.push(instr);
 }
+function assignNodeCode(n) {
+    // assign -> ID EQ expr
+    let t = exprNodeCode(n.children[2]);
+    let vname = n.children[0].token.lexeme;
+    if (symtable.get(vname).type !== t) {
+        console.log("Type mismatch");
+        ICE();
+    }
+    moveBytesFromStackToLocation(symtable.get(vname).location);
+}
+function stringconstantNodeCode(n) {
+    let s = n.token.lexeme;
+    //...strip leading and trailing quotation marks...
+    s = s.substring(1, s.length - 1);
+    //...handle backslash escapes... ", n, and \
+    let temp = s.split("\"");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\"" + temp[x];
+    }
+    temp = s.split("\n");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\n" + temp[x];
+    }
+    temp = s.split("\\");
+    s = temp[0];
+    for (let x = 1; x < temp.length; x++) {
+        s = s + "\\\\" + temp[x];
+    }
+    if (!stringPool.has(s))
+        stringPool.set(s, label());
+    return stringPool.get(s); //return the label
+}
 function programNodeCode(n) {
     //console.log(n)
-    //program -> braceblock
+    //program -> var_decl_list braceblock
     if (n.sym != "program") {
         console.log(n);
         console.log("n.sym isn't program n.sym =", n.sym.trim, "instead");
         ICE();
     }
-    braceblockNodeCode(n.children[0]);
+    vardecllistNodeCode(n.children[0]);
+    braceblockNodeCode(n.children[1]);
 }
 function braceblockNodeCode(n) {
     //console.log(n)
@@ -57,7 +185,7 @@ function stmtsNodeCode(n) {
 }
 function stmtNodeCode(n) {
     //console.log(n)
-    //stmt -> cond | loop | return-stmt SEMI
+    //stmt -> cond | loop | return-stmt SEMI |  assign SEMI
     let c = n.children[0];
     switch (c.sym) {
         case "cond":
@@ -68,6 +196,9 @@ function stmtNodeCode(n) {
             break;
         case "return_stmt":
             returnstmtNodeCode(c);
+            break;
+        case "assign":
+            assignNodeCode(c);
             break;
         default:
             console.log(n);
@@ -82,12 +213,6 @@ function returnstmtNodeCode(n) {
     emit("pop rax");
     emit("ret");
 }
-/*function exprNodeCode(n: TreeNode) {
-    //console.log(n)
-    //expr -> NUM
-    let d = parseInt(n.children[0].token.lexeme, 10);
-    emit(`push qword ${d}`);
-}*/
 function exprNodeCode(n) {
     return orexpNodeCode(n.children[0]);
 }
@@ -151,12 +276,13 @@ function notexpNodeCode(n) {
 }
 function sumNodeCode(n) {
     //sum -> sum PLUS term | sum MINUS term | term
-    if (n.children.length === 1)
+    if (n.children.length === 1) {
         return termNodeCode(n.children[0]);
+    }
     else {
         let sumType = sumNodeCode(n.children[0]);
         let termType = termNodeCode(n.children[2]);
-        if (sumType !== VarType.INTEGER || termType != VarType.INTEGER) {
+        if (sumType != VarType.INTEGER || termType != VarType.INTEGER) {
             console.log("variable type is not int in sum");
             ICE();
         }
@@ -170,7 +296,8 @@ function sumNodeCode(n) {
                 emit("sub rax, rbx");
                 break;
             default:
-                ICE;
+                console.log("neither plus nor minus");
+                ICE();
         }
         emit("push rax");
         return VarType.INTEGER;
@@ -217,7 +344,7 @@ function negNodeCode(n) {
         return factorNodeCode(n.children[0]);
     }
     else {
-        let negType = negNodeCode(n.children[1]);
+        negNodeCode(n.children[1]);
         emit("pop rax");
         emit("neg rax");
         emit("push rax");
@@ -225,17 +352,51 @@ function negNodeCode(n) {
     }
 }
 function factorNodeCode(n) {
-    //factor -> NUM | LP expr RP
-    let child = n.children[0];
-    switch (child.sym) {
-        case "NUM":
-            let v = parseInt(child.token.lexeme, 10);
+    //factor : NUM | LP expr RP | STRING_CONSTANT | ID;
+    switch (n.children[0].sym) {
+        case "NUM": {
+            let v = parseInt(n.children[0].token.lexeme, 10);
             emit(`push qword ${v}`);
             return VarType.INTEGER;
-        case "LP":
+        }
+        case "LP": {
             return exprNodeCode(n.children[1]);
-        default:
+        }
+        case "ID": {
+            if (!symtable.has(n.children[0].token.lexeme)) {
+                console.log("no such variable");
+                ICE();
+            }
+            let IDinfo = symtable.get(n.children[0].token.lexeme);
+            switch (IDinfo.type) {
+                case VarType.STRING: {
+                    emit(`push qword ${IDinfo.location}`);
+                    return VarType.STRING;
+                }
+                case VarType.INTEGER: {
+                    emit(`push qword [${IDinfo.location}]`);
+                    return VarType.INTEGER;
+                }
+            }
+        }
+        case "func-call": {
+            let type = funccallNodeCode(n.children[0]);
+            if (type == VarType.VOID) {
+                console.log("Can't use void in expression");
+                ICE();
+            }
+            emit("push rax");
+            return type;
+        }
+        case "STRING_CONSTANT": {
+            let address = stringconstantNodeCode(n.children[0]);
+            emit(`push qword ${address}`);
+            return VarType.STRING;
+        }
+        default: {
+            console.log("improper entry", n.children[0].sym);
             ICE();
+        }
     }
 }
 function relexpNodeCode(n) {
@@ -318,9 +479,119 @@ function loopNodeCode(n) {
     emit(`jmp ${startloopLabel}`);
     emit(`${endloopLabel}:`);
 }
+function outputSymbolTableInfo() {
+    for (let vname of symtable.table.keys()) {
+        let vinfo = symtable.get(vname);
+        emit(`${vinfo.location}:`);
+        emit("dq 0");
+    }
+}
+function outputStringPoolInfo() {
+    for (let key of stringPool.keys()) {
+        let lbl = stringPool.get(key);
+        emit(`${lbl}:`);
+        for (let i = 0; i < key.length; ++i) {
+            emit(`db ${key.charCodeAt(i)}`);
+        }
+        emit("db 0"); //null terminator
+    }
+}
+function funccallNodeCode(n) {
+    return builtinfunccallNodeCode(n);
+}
+function builtinfunccallNodeCode(n) {
+    //builtin-func-call -> PRINT LP expr RP | INPUT LP RP |
+    //OPEN LP expr RP | READ LP expr RP | WRITE LP expr CMA expr RP |
+    //CLOSE LP expr RP
+    switch (n.children[0].sym) {
+        case "OPEN": {
+            let type = exprNodeCode(n.children[2]);
+            if (type !== VarType.STRING) {
+                console.log("needs to be a string");
+                ICE();
+            }
+            //tmp = fopen( filename, "a" );
+            emit("mov arg0, [rsp]"); //filename (string)
+            emit("mov arg1, string_a"); //next slide
+            emit("ffcall fopen");
+            //fclose(tmp)
+            emit("mov arg0, rax");
+            emit("ffcall fclose");
+            //fopen( filename, "r+" )
+            emit("pop arg0"); //filename; remove from stack
+            emit("mov arg1, string_rplus"); //next slide
+            emit("ffcall fopen"); //result is in rax
+            return VarType.INTEGER;
+        }
+        case "CLOSE": {
+            let type = exprNodeCode(n.children[2]);
+            if (type !== VarType.INTEGER) {
+                console.log("Close requires numeric arg");
+            }
+            emit("pop arg0"); //argument for fclose
+            emit("ffcall fclose");
+            return VarType.VOID;
+        }
+        case "WRITE": {
+            // WRITE LP expr CMA expr RP
+            // fprintf( fp, "%s", str )  or  fprintf( fp, "%d", num )
+            let handletype = exprNodeCode(n.children[2]);
+            if (handletype !== VarType.INTEGER) {
+                console.log("handletype must be integer");
+                ICE();
+            }
+            let outputtype = exprNodeCode(n.children[4]);
+            let fmt;
+            if (outputtype === VarType.INTEGER) {
+                fmt = "string_percent_d";
+            }
+            else if (outputtype === VarType.STRING) {
+                fmt = "string_percent_s";
+            }
+            else {
+                console.log("output is not an integer(0) or a string(1)");
+                console.log(outputtype);
+                ICE();
+            }
+            emit("pop arg2"); //the thing to print
+            emit(`mov arg1, ${fmt}`);
+            emit("pop arg0"); //the handle
+            emit("ffvcall fprintf,0");
+            //need to call fflush(NULL)
+            emit("mov arg0, 0");
+            emit("ffcall fflush");
+            return VarType.VOID;
+        }
+        case "INPUT": {
+            //INPUT LP RP
+            //fgets( ptr, size, stream)
+            //strtol( ptr, eptr, base )
+            emit("mov arg0, fgets_buffer");
+            emit("mov arg1, 64");
+            emit("mov arg2, [stdin]");
+            emit("ffcall fgets");
+            //should do error checking...
+            emit("mov arg0, fgets_buffer");
+            emit("mov arg1, 0");
+            emit("mov arg2, 10");
+            emit("ffcall strtol"); //result is in rax
+            return VarType.INTEGER;
+        }
+    }
+}
 function makeAsm(root) {
+    symtable = new SymbolTable();
+    stringPool = new Map();
     asmCode = [];
     labelCounter = 0;
+    emit("mov arg0, 0");
+    emit("mov arg1, string_r");
+    emit("ffcall fdopen");
+    emit("mov[stdin], rax");
+    emit("mov arg0, 1");
+    emit("mov arg1, string_w");
+    emit("ffcall fdopen");
+    emit("mov[stdout], rax");
     emit("default rel");
     emit("section .text");
     emit("global main");
@@ -328,27 +599,18 @@ function makeAsm(root) {
     programNodeCode(root);
     emit("ret");
     emit("section .data");
+    emit("stdin: dq 0");
+    emit("stdout: dq 0");
+    emit("string_r: db 'r', 0");
+    emit("string_w: db 'w', 0");
+    emit("string_a: db 'a', 0");
+    emit("string_rplus: db 'r+', 0");
+    emit("string_percent_s: db '%s', 0");
+    emit("string_percent_d: db '%d', 0");
+    emit("fgets_buffer: times 64 db 0");
+    outputSymbolTableInfo();
+    outputStringPoolInfo();
     return asmCode.join("\n");
-}
-class Token {
-    constructor(sym, line, lexeme) {
-        this.sym = sym;
-        this.line = line;
-        this.lexeme = lexeme;
-    }
-    toString() {
-        return `${this.sym} ${this.line} ${this.lexeme}`;
-    }
-}
-class TreeNode {
-    constructor(sym, token) {
-        this.sym = sym;
-        this.token = token;
-        this.children = [];
-    }
-    toString() {
-        return `${this.sym} ${this.token} ${this.children}`;
-    }
 }
 function walk(parser, node) {
     let p = node.getPayload();
@@ -371,12 +633,6 @@ function walk(parser, node) {
             N.children.push(walk(parser, child));
         }
         return N;
-    }
-}
-class ErrorHandler {
-    syntaxError(rec, sym, line, column, msg, e) {
-        console.log("Syntax error:", msg, "on line", line, "at column", column);
-        throw new Error("Syntax error in ANTLR parse");
     }
 }
 function parse(txt) {
