@@ -20,6 +20,9 @@ class TreeNode {
         this.children = [];
     }
     toString() {
+        if (this.token == null) {
+            return `${this.sym} ${this.children}`;
+        }
         return `${this.sym} ${this.token} ${this.children}`;
     }
 }
