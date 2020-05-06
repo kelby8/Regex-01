@@ -1,1548 +1,486 @@
 [
   {
     "code": ''
-
 {
-return 2+4;
+    print(456);
+    return 123;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 6,
+    "returns": 123,
+    "output": "456",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  {
+    "code": ''
+{
+    print(456);
+    print("\n");
+    return 123;
+}
+'',
+    "syntaxOK": true,
+    "returns": 123,
+    "output": "456\n",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  
+  {
+    "code": ''
+{
+    print("Hello, world!");
+    return 123;
+}
+'',
+    "syntaxOK": true,
+    "returns": 123,
+    "output": "Hello, world!",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  
+  
+  {
+    "code": ''
+{
+    print("Hello, \"world\"!");
+    return 123;
+}
+'',
+    "syntaxOK": true,
+    "returns": 123,
+    "output": "Hello, \"world\"!",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+   
+  
+  {
+    "code": ''
+{
+    print("c:\\> format c:\\\nOK");
+    return 123;
+}
+'',
+    "syntaxOK": true,
+    "returns": 123,
+    "output": "c:\\> format c:\\\nOK",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  
+  {
+    "code": ''
+//A
+{
+    print("H");
+    print("ell");
+    print("o\nw");
+    print("orld!");
+    return 124;
+}
+'',
+    "syntaxOK": true,
+    "returns": 124,
+    "output": "Hello\nworld!",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  {
+    "code": ''
+//B
+{
+    print("H");
+    print("ell");
+    print("o\\nw");
+    print("orld!");
+    return 124;
+}
+'',
+    "syntaxOK": true,
+    "returns": 124,
+    "output": "Hello\\nworld!",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  {
+    "code": ''
+//B
+{
+    print("A\\\\\"B");
+    return 124;
+}
+'',
+    "syntaxOK": true,
+    "returns": 124,
+    "output": "A\\\\\"B",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  {
+    "code": ''
+//B
+{
+    print("A\n\\n\\\n\\\\n\\\\\n\"\\\"\\\\\"\\\\\\\\\\\\\\B");
+    return 124;
+}
+'',
+    "syntaxOK": true,
+    "returns": 124,
+    "output": "A\n\\n\\\n\\\\n\\\\\n\"\\\"\\\\\"\\\\\\\\\\\\\\B",
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  
+  
+  
+  {
+    "code": ''
+int fp;
+{
+    fp = open("blah");
+    print("fp is ");
+    print(fp);
+    close(fp);
+    return 23;
+}
+'',
+    "syntaxOK": true,
+    "returns": 23,
+    "output": null,
+    "outputfiles": [],
+    "input": null,
     "bonus": false
   },
   {
     "code": ''
 
+    int fp;
 {
-return -1+4;
+    fp = open("blah");
+    print("fp is ");
+    print(fp);
+    close(fp);
+    return 23;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 3,
+    "returns": 23,
+    "output": null,
+    "outputfiles": [],
+    "input": null,
     "bonus": false
   },
   {
     "code": ''
 
+int fp;
+int value;
 {
-return 1+2*3-4;
+    fp = open("blah");
+    write(fp, 40+2 );
+    close(fp);
+    fp = open("blah");
+    value = read(fp);
+    print("value is ");
+    print(value);
+    close(fp);
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2+2 and 0 or 7*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2+2 or 0 or 7*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2+2 and 0 and 7*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": "value is 42",
+    "outputfiles": [],
+    "input": null,
     "bonus": false
   },
   {
     "code": ''
 
+int fp;
+int value;
 {
-return 2 or 4;
+    
+    fp = open("blah");
+    write(fp, 40+2 );
+    close(fp);
+    fp = open("blah");
+    value = read(fp);
+    print("value is ");
+    print(value);
+    close(fp);
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 0 or 4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 4 or 0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 0 or 0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": "value is 42",
+    "outputfiles": [],
+    "input": null,
     "bonus": false
   },
   {
     "code": ''
 
+int fp;
+int value;
 {
-return 3 and 5;
+    fp = open("blah");
+    write(fp, 40+2 );
+    write(fp," hello");
+    close(fp);
+    fp = open("blah");
+    value = read(fp);
+    print("value is ");
+    print(value);
+    close(fp);
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 0 and 5;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": "value is 42",
+    "outputfiles": [
+      [
+        "blah",
+        "42 hello"
+      ]
+    ],
+    "input": null,
     "bonus": false
   },
+  
+  
+  
   {
     "code": ''
 
+int fp1;
+int fp2;
 {
-return 5 and 0;
+    fp1 = open("blah1");
+    fp2 = open("blah2");
+    write(fp1, "this is " );
+    write(fp2, "flivve");
+    write(fp1, "blah");
+    write(fp2, "r");
+    close(fp1);
+    close(fp2);
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": null,
+    "outputfiles": [
+      [
+        "blah1",
+        "this is blah"
+      ],
+      [
+        "blah2",
+        "flivver"
+      ]
+    ],
+    "input": null,
     "bonus": false
   },
+  
+  
+  
   {
     "code": ''
 
+int fp1;
+string msg;
+int four;
 {
-return 0 and 0;
+    msg = "ode to ";
+    four = 4;
+    fp1 = open("ode");
+    write(fp1, msg );
+    write(fp1, four);
+    write(fp1, " grecian urn");
+    close(fp1);
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": null,
+    "outputfiles": [
+      [
+        "ode",
+        "ode to 4 grecian urn"
+      ],
+      [
+        "blah2",
+        "flivver"
+      ]
+    ],
+    "input": null,
     "bonus": false
   },
+  
+  
+  
+  
+  
+  
+  
+  
+  
   {
     "code": ''
 
+//returns failure
+int fp;
 {
-return not 5;
+    fp = open(42);
+    return 0;
 }
 '',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return not 0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return not 2+3;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return not 0+0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3+4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 7,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 5+6;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 11,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3+4 and 5+6;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 > 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2 > 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 < 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2 < 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 == 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 == 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 != 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 != 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 >= 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2 >= 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 1 <= 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2 <= 1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3 + 4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 7,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 5 - 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3 * 4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 12,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3 * 5 + 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 17,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 2 + 3*5;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 17,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 3*5-4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 11,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 20-3*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 8,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 12/6;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 2,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return 10%3;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-return -(1-4);
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    if( 12 ){
-        return 34;
-    } else {
-        return 78;
-    }
-    return 56;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 34,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    if( 0 ){
-        return 34;
-    } else {
-        return 78;
-    }
-    return 56;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 78,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    if( 0 ){
-        return 34;
-    } 
-    return 56;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 56,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    while( 123 ){
-        return 12;
-    }
-    return 34;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 12,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    while( 0 ){
-        return 12;
-    }
-    return 34;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 34,
-    "bonus": false
-  },
-  {
-    "code": ''
-
-{
-    while( 1 ){
-        if( 0 ) {
-            return 1;
-        }
-    }
-}
-'',
-    "syntaxOK": true,
-    "output":"",
+    "syntaxOK": false,
     "returns": null,
+    "output": null,
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  {
+    "code": ''
+
+{
+    write("xyz","abc");
+    return 0;
+}
+'',
+    "syntaxOK": false,
+    "returns": null,
+    "output": null,
+    "outputfiles": [],
+    "input": null,
+    "bonus": false
+  },
+  {
+    "code": ''
+
+{
+    read("xyz");
+    return 0;
+}
+'',
+    "syntaxOK": false,
+    "returns": null,
+    "output": null,
+    "outputfiles": [],
+    "input": null,
     "bonus": false
   },
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   {
-    "code": ''
-
-{
-return 2.3+4.7;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 7,
-    "bonus": 1
-   },
-   {
-    "code": ''
-
-{
-return 2.1+4.1+0.8;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 7,
-    "bonus": 1
-  },
   {
     "code": ''
 
+int n;
+int total;
+int i;
 {
-return 4.7-1.7;
+    n = input();
+    total = 0;
+    i=0;
+    while( i <= n ){
+        total = total + i;
+        i = i + 1;
+    }
+    print("Total: ");
+    print(total);
+    print("\n");
+    return 0;
 }
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.5*6.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 15,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.875+2.25*3.5-4.75;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 5,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.5+2.25 and 0 or 7*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2+2 or 0 or 7.5*4.5;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.1+2.2 and 0.0 and 7*4;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
-    "bonus": 1
+    "output": "Total: 55\n",
+    "outputfiles": [],
+    "input": "10\n",
+    "bonus": false
   },
+  
+  
+  
   {
     "code": ''
 
 {
-return 2.0 or 4;
+    print("hello\\nthere");
 }
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
 
-{
-return 0 or 4.0;
-}
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 4.0 or -0.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return -0.0 or 0.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
-    "bonus": 1
+    "output": "hello\\nthere",
+    "outputfiles": [],
+    "bonus": false
   },
+  
+  
   {
     "code": ''
 
+string s;
 {
-return 3.1 and -5.4;
+    s = now();
+    print("It is now ");
+    print(s);
+    print("...\n");
+    return 0;
 }
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
 
-{
-return 0.1 and 5.2;
-}
 '',
     "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 5.5 and 0.00001;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 0.0 and 0.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
     "returns": 0,
+    "output": "It is now ${now}\n...\n",
+    "outputfiles": [],
     "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return not 5.1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return not 0.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return not 2.0+3.2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return not -0.0+0.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 3.25+4.75;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 8,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 3.0+4.0 and 5+6;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.34 > 2.45;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.12 > 1.13 ;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.12 < 1.13 ;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.01 < 2.22;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.00001 < 1.9999;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.001 == 2.04;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.0 == 1.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1 != 2;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.1 != 1.1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.02 >= 2.1;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.2 >= 1.3;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.9999 <= 2.0;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 1,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.00001 <= 1.9999999;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 0,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 3.25 + 4.75;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 8,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 5.75 - 2.25 - 0.5;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 3.5 * 8.25 + 0.125;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 29,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 3.25 + 5.5 + 2.75 + 0.5;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 12,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 12.5/3.125;
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 4,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return -(1.0-4.0);
-}
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 3,
-    "bonus": 1
-  },
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  {
-    "code": ''
-
-{
-return 1+0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 0.5+1;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1-0.4;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 0.4-1;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2*0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1+0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2/0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1>2.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 2.5<1;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1==0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.0 != 4;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1 >= 0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{
-return 1.0 <= 2;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{ if( 1.0 + 2.0 ) { return 4; } else { return 5; } }
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 4,
-    "bonus": 1
-  },
-  {
-    "code": ''
-
-{ if( 1.0 + 2.0 - 3.0 ) { return 4; } else { return 5; } }
-'',
-    "syntaxOK": true,
-    "output":"",
-    "returns": 5,
-    "bonus": 1
-  },
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  {
-    "code": ''
-
-{
-return (int)4.9;
-}
-'',
-    "syntaxOK": true,
-    "returns": 4,
-    "bonus": 2
-  },
-
-
-
-
-  
-  {
-    "code": ''
-
-{
-return (int)(4.9+0.5);
-}
-'',
-    "syntaxOK": true,
-    "returns": 5,
-    "bonus": 2
-  },
-
-
-  
-  {
-    "code": ''
-
-{
-return 1+0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 2
-  },
-
-  
-  {
-    "code": ''
-
-{
-return 1+(int) 0.5;
-}
-'',
-    "syntaxOK": true,
-    "returns": 1,
-    "bonus": 2
-  },
-
-  
-  
-  {
-    "code": ''
-
-{
-return (double)1 + 2.0;
-}
-'',
-    "syntaxOK": true,
-    "returns": 3,
-    "bonus": 2
-  },
-  
-  
-  {
-    "code": ''
-
-{
-return 1 + (int) 2;
-}
-'',
-    "syntaxOK": true,
-    "returns": 3,
-    "bonus": 2
-  },
-
-
-
-  {
-    "code": ''
-
-{
-return (int) 5 + (int) 2;
-}
-'',
-    "syntaxOK": true,
-    "returns": 7,
-    "bonus": 2
-  },
-  
-  
-  
-  {
-    "code": ''
-
-{
-return (double)2.51+ (double) 3.51;
-}
-'',
-    "syntaxOK": true,
-    "returns": 6,
-    "bonus": 2
-  },
-
-
-  {
-    "code": ''
-
-{
-return 5.2-(double)1;
-}
-'',
-    "syntaxOK": true,
-    "returns": 4,
-    "bonus": 2
-  },
-
-  {
-    "code": ''
-{
-return 2*0.5;
-}
-'',
-    "syntaxOK": false,
-    "bonus": 2
-  },
-
-
-
-  {
-    "code": ''
-{
-return (double)2*2.5;
-}
-'',
-    "syntaxOK": true,
-    "returns":  5,
-    "bonus": 2
-  },
-
-  
-  
-
-  {
-    "code": ''
-{
-return (int)(int)(double)(int)5.5;
-}
-'',
-    "syntaxOK": true,
-    "returns":  5,
-    "bonus": 2
-  },
-  
-  
-
-  {
-    "code": ''
-{
-return 2 + (int)(int)(double)(int)5.5;
-}
-'',
-    "syntaxOK": true,
-    "returns":  7,
-    "bonus": 2
-  },
-  
-  
-  {
-    "code": ''
-
-{ if( 1 + 2.0 ) { return 4; } else { return 5; } }
-'',
-    "syntaxOK": false,
-    "output":"",
-    "bonus": 2
-  },
-
-
-
-
-  {
-    "code": ''
-
-{ if( 1 + (int)2.999 + (int)3.5 ) { return 4; } else { return 5; } }
-'',
-    "syntaxOK": true,
-    "returns": 4,
-    "bonus": 2
-  },
-  
-  
-
-  {
-    "code": ''
-{
-    return 1 + (int)2.999 + (int)3.5 ;
-}
-'',
-    "syntaxOK": true,
-    "returns": 6,
-    "bonus": 2
   }
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 ]
+

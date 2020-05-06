@@ -320,9 +320,14 @@ function loopNodeCode(n: TreeNode) {
     emit(`${endloopLabel}:`);
 }
 
+function funccallNodeCode(n: TreeNode): VarType {
+    return builtinfunccallNodeCode(n);
+}
+
 function makeAsm(root: TreeNode) {
     asmCode = [];
     labelCounter = 0;
+    emit("% include \"doCall.asm\"")
     emit("default rel");
     emit("section .text");
     emit("global main");
