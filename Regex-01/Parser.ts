@@ -152,9 +152,11 @@ function emit(instr: string) {
 function assignNodeCode(n: TreeNode) {
     // assign -> ID EQ expr
     let t: VarType = exprNodeCode(n.children[2]);
+    //console.log(n.children[2].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0])
+    //console.log(t, "is what t is")
     let vname = n.children[0].token.lexeme;
     if (symtable.get(vname).type !== t) {
-        console.log("Type mismatch");
+        console.log("Type mismatch")
         ICE();
     }
     moveBytesFromStackToLocation(symtable.get(vname).location);
@@ -165,21 +167,29 @@ function stringconstantNodeCode(n: TreeNode) {
     //...strip leading and trailing quotation marks...
     s = s.substring(1, s.length - 1)
     //...handle backslash escapes... ", n, and \let temp = s.split("\\\"")
-    let temp = s.split("\\\"")
-    console.log(temp)
-    s = temp[0]
-    for (let x = 1; x < temp.length; x++) {
-        s = s + "\"" + temp[x]
-    }
-    temp = s.split("\\\\")
-    s = temp[0]
-    for (let x = 1; x < temp.length; x++) {
-        s = s + "\\" + temp[x]
-    }
-    temp = s.split("\\n")
-    s = temp[0]
-    for (let x = 1; x < temp.length; x++) {
-        s = s + "\n" + temp[x]
+    let i = 0
+    while (i < s.length) {
+        if (s[i] == "\\") {
+            if (s[i] + s[i+1] == "\\\"") {
+                let temp2 = s.substring(0, i)
+                let t = "\""
+                let temp3 = s.substring(i + 2, s.length)
+                s = temp2 + t + temp3
+            }
+            else if (s[i] + s[i + 1] == "\\n") {
+                let temp2 = s.substring(0, i)
+                let t = "\n"
+                let temp3 = s.substring(i + 2, s.length)
+                s = temp2 + t + temp3
+            }
+            else if (s[i] + s[i + 1] == "\\\\") {
+                let temp2 = s.substring(0, i)
+                let t = "\\"
+                let temp3 = s.substring(i + 2, s.length)
+                s = temp2 + t + temp3
+            }
+        }
+        i += 1
     }
     if (!stringPool.has(s))
         stringPool.set(s, label());
@@ -190,7 +200,6 @@ function programNodeCode(n: TreeNode) {
     //console.log(n)
     //program -> var_decl_list braceblock
     if (n.sym != "program") {
-        console.log(n)
         console.log("n.sym isn't program n.sym =", n.sym.trim, "instead")
         ICE();
     }
@@ -386,7 +395,7 @@ function negNodeCode(n: TreeNode): VarType {
 }
 
 function factorNodeCode(n: TreeNode): VarType {
-    //factor : NUM | LP expr RP | STRING_CONSTANT | ID;
+    //factor : NUM | LP expr RP | STRING_CONSTANT | ID  | func_call;
     switch (n.children[0].sym) {
         case "NUM": {
             let v = parseInt(n.children[0].token.lexeme, 10);
@@ -414,10 +423,12 @@ function factorNodeCode(n: TreeNode): VarType {
                 }
             }
         }
-        case "func-call": {
+        case "func_call": {
             let type = funccallNodeCode(n.children[0]);
-            if (type == VarType.VOID) {
+            if (type === VarType.VOID) {
                 console.log("Can't use void in expression")
+                console.log(type)
+                console.log(n.children[0].children[0].children[0])
                 ICE()
             }
             emit("push rax");
@@ -437,8 +448,9 @@ function factorNodeCode(n: TreeNode): VarType {
 
 function relexpNodeCode(n: TreeNode): VarType {
     //rel sum RELOP sum | sum
-    if (n.children.length === 1)
+    if (n.children.length === 1) {
         return sumNodeCode(n.children[0]);
+    }
     else {
         let sum1Type = sumNodeCode(n.children[0]);
         let sum2Type = sumNodeCode(n.children[2]);
@@ -534,7 +546,7 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
     //OPEN LP expr RP | READ LP expr RP | WRITE LP expr CMA expr RP |
     //CLOSE LP expr RP
     switch (n.children[0].sym) {
-        case "OPEN":{
+        case "OPEN": {
             let type = exprNodeCode(n.children[2]);
             if (type !== VarType.STRING) {
                 console.log("needs to be a string")
@@ -553,7 +565,7 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
             emit("ffcall fopen");     //result is in rax
             return VarType.INTEGER;
         }
-        case "CLOSE":{
+        case "CLOSE": {
             let type = exprNodeCode(n.children[2]);
             if (type !== VarType.INTEGER) {
                 console.log("Close requires numeric arg")
@@ -590,7 +602,7 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
             //need to call fflush(NULL)
             emit("mov arg0, 0");
             emit("ffcall fflush");
-            return VarType.VOID;
+            return VarType.INTEGER;
         }
         case "INPUT": {
             //INPUT LP RP
@@ -630,6 +642,27 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
             emit("mov arg0, 0");
             emit("ffcall fflush");
             return VarType.VOID;
+        }
+        case "READ": {
+            let type = exprNodeCode(n.children[2]);
+            if (type !== VarType.INTEGER) {
+                console.log("needs to be a INTEGER")
+                ICE()
+            }
+            //fseek(fp, 0, 2)
+            //fgets( ptr, size, stream)
+            //strtol( ptr, eptr, base )
+
+            emit("mov arg0, fgets_buffer");
+            emit("mov arg1, 64");
+            emit("mov arg2, [rsp]");
+            emit("ffcall fgets");
+            //should do error checking...
+            emit("mov arg0, fgets_buffer");
+            emit("mov arg1, 0");
+            emit("mov arg2, 10");
+            emit("ffcall strtol");  //result is in rax
+            return VarType.INTEGER;
         }
     }
 }
