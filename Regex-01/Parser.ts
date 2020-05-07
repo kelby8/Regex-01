@@ -427,12 +427,12 @@ function factorNodeCode(n: TreeNode): VarType {
             let type = funccallNodeCode(n.children[0]);
             if (type === VarType.VOID) {
                 console.log("Can't use void in expression")
-                console.log(type)
-                console.log(n.children[0].children[0].children[0])
                 ICE()
             }
             emit("push rax");
+            emit(";end of fator func_call")
             return type;
+            break;
         }
         case "STRING_CONSTANT": {
             let address = stringconstantNodeCode(n.children[0])

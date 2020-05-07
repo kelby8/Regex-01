@@ -21,6 +21,7 @@ pop arg0
 mov arg1, string_rplus
 ffcall fopen
 push rax
+;end of fator func_call
 pop rax
 mov [lbl0], rax
 push qword [lbl0]
@@ -49,6 +50,7 @@ pop arg0
 mov arg1, string_rplus
 ffcall fopen
 push rax
+;end of fator func_call
 pop rax
 mov [lbl0], rax
 push qword [lbl0]
@@ -61,6 +63,7 @@ mov arg1, 0
 mov arg2, 10
 ffcall strtol
 push rax
+;end of fator func_call
 pop rax
 mov [lbl1], rax
 push qword lbl3
