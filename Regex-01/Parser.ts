@@ -128,10 +128,7 @@ function vardecllistNodeCode(n: TreeNode) {
 
 function vardeclNodeCode(n: TreeNode) {
     //var-decl -> TYPE ID
-    console.log("problem here?")
-    console.log(n)
     let vname = n.children[1].token.lexeme;
-    console.log("nope, no problem here")
     let vtype = typeNodeCode(n.children[0]);
     symtable.set(vname, new VarInfo(vtype, label()));
 }
@@ -167,21 +164,22 @@ function stringconstantNodeCode(n: TreeNode) {
     let s = n.token.lexeme;
     //...strip leading and trailing quotation marks...
     s = s.substring(1, s.length - 1)
-    //...handle backslash escapes... ", n, and \
-    let temp = s.split("\"")
+    //...handle backslash escapes... ", n, and \let temp = s.split("\\\"")
+    let temp = s.split("\\\"")
+    console.log(temp)
     s = temp[0]
     for (let x = 1; x < temp.length; x++) {
-        s = s + "\\\"" + temp[x]
+        s = s + "\"" + temp[x]
     }
-    temp = s.split("\n")
+    temp = s.split("\\\\")
     s = temp[0]
     for (let x = 1; x < temp.length; x++) {
-        s = s + "\\\n" + temp[x]
+        s = s + "\\" + temp[x]
     }
-    temp = s.split("\\")
+    temp = s.split("\\n")
     s = temp[0]
     for (let x = 1; x < temp.length; x++) {
-        s = s + "\\\\" + temp[x]
+        s = s + "\n" + temp[x]
     }
     if (!stringPool.has(s))
         stringPool.set(s, label());
@@ -217,9 +215,11 @@ function stmtsNodeCode(n: TreeNode) {
 
 function stmtNodeCode(n: TreeNode) {
     //console.log(n)
-    //stmt -> cond | loop | return-stmt SEMI |  assign SEMI
+    //stmt : func_call SEMI | cond | loop | return_stmt SEMI | assign SEMI ;
     let c = n.children[0];
     switch (c.sym) {
+        case "func_call":
+            funccallNodeCode(c); break;
         case "cond":
             condNodeCode(c); break;
         case "loop":
@@ -526,7 +526,7 @@ function outputStringPoolInfo() {
 }
 
 function funccallNodeCode(n: TreeNode): VarType {
-    return builtinfunccallNodeCode(n);
+    return builtinfunccallNodeCode(n.children[0]);
 }
 
 function builtinfunccallNodeCode(n: TreeNode): VarType {
@@ -592,7 +592,7 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
             emit("ffcall fflush");
             return VarType.VOID;
         }
-        case "INPUT":{
+        case "INPUT": {
             //INPUT LP RP
             //fgets( ptr, size, stream)
             //strtol( ptr, eptr, base )
@@ -607,6 +607,30 @@ function builtinfunccallNodeCode(n: TreeNode): VarType {
             emit("ffcall strtol");  //result is in rax
             return VarType.INTEGER;
         }
+        case "PRINT": {
+            //PRINT LP expr RP
+            // printf("%s", str )  or  printf("%d", num )
+            let outputtype = exprNodeCode(n.children[2]);
+            let fmt: string;
+            if (outputtype === VarType.INTEGER) {
+                fmt = "string_percent_d";
+            }
+            else if (outputtype === VarType.STRING) {
+                fmt = "string_percent_s";
+            }
+            else {
+                console.log("output is not an integer(0) or a string(1)")
+                console.log(outputtype)
+                ICE()
+            }
+            emit("pop arg1");   //the thing to print
+            emit(`mov arg0, ${fmt}`);
+            emit("ffvcall printf,0");
+            //need to call fflush(NULL)
+            emit("mov arg0, 0");
+            emit("ffcall fflush");
+            return VarType.VOID;
+        }
     }
 }
 
@@ -615,6 +639,7 @@ function makeAsm(root: TreeNode) {
     stringPool = new Map<string, string>();
     asmCode = [];
     labelCounter = 0;
+    emit("%include \"doCall.asm\"")
     emit("mov arg0, 0")
     emit("mov arg1, string_r")
     emit("ffcall fdopen")
